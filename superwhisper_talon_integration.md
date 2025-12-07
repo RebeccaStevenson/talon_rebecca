@@ -11,6 +11,11 @@ The integration allows you to:
 
 ## Files Included
 
+> **📁 Direct Links:**
+> - [`superwhisper.talon`](https://github.com/RebeccaStevenson/talon_rebecca/blob/master/core/modes/superwhisper.talon) - Voice commands
+> - [`superwhisper_trigger.py`](https://github.com/RebeccaStevenson/talon_rebecca/blob/master/superwhisper_trigger.py) - Python actions
+> - [`superwhisperPrompts.md`](https://github.com/RebeccaStevenson/talon_rebecca/blob/master/superwhisperPrompts.md) - Prompt examples
+
 ### 1. `superwhisper.talon` - Voice Commands
 
 This Talon file provides the following voice commands:
