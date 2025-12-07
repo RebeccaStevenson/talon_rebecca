@@ -1,0 +1,49 @@
+---
+alwaysApply: true
+---
+
+# How to add Talon Voice Commands
+
+This project uses [Talon Voice](https://talonvoice.com/) to control the computer with voice. Commands are defined in `.talon` files located in your Talon user directory (`~/.talon/user/`). This is in that directory.
+
+## `.talon` Files
+
+Voice commands are defined in files with the `.talon` file extension.
+
+A simple command looks like this:
+
+```talon
+select everything:
+    key(ctrl-a)
+```
+
+You can also have multiple commands in one file, and scope them to specific applications.
+
+For example, [`custom/random_mac.talon`](mdc:custom/random_mac.talon) is scoped to macOS:
+
+```talon
+os: mac
+-
+go up: user.mouse_scroll_up()
+go down: user.mouse_scroll_down()
+```
+
+The `-` separates the context matching from the commands.
+
+## Creating new commands
+
+1.  **Find the right file:**
+    *   For general Mac commands, you can add them to [`custom/random_mac.talon`](mdc:custom/random_mac.talon).
+    *   For new functionality, it is recommended to create a new file in the `custom/` directory. Workspace rules specify that new files should be in the `custom` directory.
+
+2.  **Find the action:**
+    *   Before adding a command, you need to know which action to call.
+    *   You can search the codebase for similar commands to see which action they use. For example, searching for "scroll down" reveals that `user.mouse_scroll_down()` is the action for scrolling down.
+
+3.  **Add the command:**
+    *   Add the new command to your chosen `.talon` file.
+
+## Python Scripts
+
+For more complex commands, you might need to write some Python code. Python files can define new actions, settings, lists, and more. These can then be used from your `.talon` files. When adding new python scripts, they should be placed in the `custom/` directory.
+

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+custom_prompts.talon
+
+# Personal settings (contain local paths and bookmarks)
+system_paths-*.talon-list
+settings/websites.csv
+settings/search_engines.csv
+
+# Personal notes
+misc/notes/notes/

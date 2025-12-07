@@ -1,0 +1,148 @@
+# Creating Advanced Talon Commands
+
+This guide covers creating advanced Talon commands using Python. This allows for complex logic that isn't possible with simple Talonscript in `.talon` files.
+
+## Review: `Module` vs `Context`
+
+-   **`Module` (`.py`)**: Used to **declare** new...
+    -   Actions (`mod.action_class`, `mod.action`)
+    -   Lists (`mod.list`)
+    -   Captures (`mod.capture`)
+    -   Tags (`mod.tag`)
+    -   Settings (`mod.setting`)
+-   **`Context` (`.py` or `.talon`)**: Used to **implement** or **set** the things declared in a `Module`. `Context`s are activated based on matches like the OS, application, or active tags.
+
+## Actions
+
+Actions are functions you can call from `.talon` files or other Python scripts.
+
+**1. Declare in a generic `.py` file (e.g., `apps/my_app/my_app.py`)**
+
+```python
+from talon import Module
+
+mod = Module()
+
+@mod.action_class
+class Actions:
+    def my_cool_action(number: int, text: str):
+        """A cool action that does something cool.
+        It can be called from a .talon file like:
+        user.my_cool_action(5, "hello")
+        """
+        # A default implementation can go here, or it can be empty.
+        print(f"Default implementation: {number}, {text}")
+
+```
+
+**2. Implement in a context-specific `.py` file (e.g., `apps/my_app/my_app_mac.py`)**
+
+```python
+from talon import Context, actions
+
+ctx = Context()
+ctx.matches = r"""
+os: mac
+app.bundle: com.google.Chrome
+"""
+
+@ctx.action_class("user")
+class UserActions:
+    def my_cool_action(number: int, text: str):
+        # This implementation will run on mac in Chrome
+        print("Chrome on Mac implementation!")
+        # You can call the default/next implementation
+        actions.next(number, f"from mac: {text}")
+```
+
+**3. Call from a `.talon` file (e.g., `apps/my_app/my_app.talon`)**
+
+```talon
+cool command <number_string> <word>:
+    user.my_cool_action(number_string, word)
+```
+
+## Lists
+
+Lists map spoken words to strings.
+
+**1. Declare in a `.py` file**
+
+```python
+from talon import Module
+mod = Module()
+mod.list("my_things", desc="A list of my things")
+```
+
+**2. Populate in a `.talon` file**
+
+```talon
+# You can set the context for this list
+os: mac
+-
+list: user.my_things =
+    one: "first_thing"
+    two: "second_thing"
+```
+
+**3. Use in a command**
+
+```talon
+get thing {user.my_things}:
+    insert(my_things)
+```
+
+## Captures
+
+Captures are like advanced lists that can recognize complex phrases using code.
+
+**1. Declare in a `.py` file**
+
+```python
+from talon import Module
+mod = Module()
+@mod.capture(rule="{user.my_things} (and | or) {user.my_things}")
+def my_capture(m) -> str:
+    "Returns a combination of things"
+    return f"{m.my_things_1} {m[1]} {m.my_things_2}"
+```
+
+**2. Use in a command**
+
+```talon
+combine things <user.my_capture>:
+    insert(my_capture)
+```
+
+## Tags
+
+Tags are used to enable/disable contexts (and thus commands, settings, etc.).
+
+**1. Declare a tag in a `.py` file**
+
+```python
+from talon import Module
+mod = Module()
+mod.tag("my_mode_tag", desc="A tag for a special mode")
+```
+
+**2. Create a context that uses the tag**
+
+```python
+# my_mode.talon
+tag: user.my_mode_tag
+-
+special command: insert("You are in special mode!")
+```
+
+**3. Create commands to enable/disable the tag**
+
+```python
+# mode_management.talon
+enter special mode:
+    mode.enable("user.my_mode_tag")
+
+exit special mode:
+    mode.disable("user.my_mode_tag")
+```
+When a user says "enter special mode", the `user.my_mode_tag` becomes active, and the "special command" becomes available.

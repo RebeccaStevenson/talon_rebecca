@@ -1,0 +1,202 @@
+---
+alwaysApply: true
+---
+
+# Talon Voice Development Guide
+
+This guide provides an overview of how to work with [Talon](https://talonvoice.com/docs/). Talon uses `.talon` files for voice commands and Python (`.py`) files for more complex logic.
+
+The user's scripts are located in `~/.talon/user`. The current workspace is the `community` repository, a collection of shared Talon scripts. Custom user scripts (such as the ones we are creating) are placed in the `custom/` directory.
+
+## `.talon` Files
+
+`.talon` files define voice commands and are context-sensitive.
+
+### Structure
+
+A `.talon` file has two parts, separated by `---`:
+
+1.  **Context Header:** Above the `---`. Defines when the commands are active.
+    ```talon
+    # activate this .talon file if the current app name is "Chrome"
+    app.name: Chrome
+    # and the OS is mac
+    os: mac
+    ```
+2.  **Body:** Below the `---`. Contains command definitions, settings, and tag declarations.
+
+### Commands
+
+Commands map a spoken phrase (rule) to an action (body).
+
+`rule: body`
+
+**Example:**
+```talon
+# hello.talon
+hello talon: "hello world"
+```
+Saying "hello talon" will type "hello world".
+
+The rule syntax is powerful:
+- `[optional]`: Optional words.
+- `(choice one | choice two)`: Alternative phrases.
+- `<capture>`: Captures spoken words, like numbers or dictation. Example: `<user.number_string>`.
+- `{list}`: Matches words from a defined list.
+
+The body is Talonscript, which can:
+- Insert text: `insert("text")`
+- Press keys: `key(ctrl-shift-a)`
+- Call actions defined in Python: `user.my_custom_action()`
+
+## Python Scripts (`.py`)
+
+Python is used for more complex logic.
+
+### File Naming and Structure
+
+In the `community` repository, it is common to see a set of files for a single application:
+- `app_name.py`: Defines generic, cross-platform actions and logic using a `Module`.
+- `app_name.talon`: Defines voice commands that are active across all platforms for that app.
+- `app_name_mac.py`, `app_name_win.py`, `app_name_linux.py`: Platform-specific implementations of actions using `Context`.
+- `app_name_mac.talon`, `app_name_win.talon`, `app_name_linux.talon`: Platform-specific voice commands.
+
+New user-specific commands should be placed in the `custom/` directory.
+
+### `Module`
+
+A `Module` is used to *declare* new actions, lists, tags, settings, and captures that can be used in `.talon` files or other python scripts.
+
+```python
+# app.py
+from talon import Module
+
+mod = Module()
+
+@mod.action_class
+class Actions:
+    def my_custom_action(text: str):
+        "A custom action that prints text"
+        print(text)
+```
+
+### `Context`
+
+A `Context` is used to *implement* actions for specific situations (e.g., for a particular application or when a certain tag is active). It can also set lists, settings, and tags for that context.
+
+```python
+# app_win.py
+from talon import Context, actions
+
+ctx = Context()
+ctx.matches = r"""
+os: windows
+app.name: Notepad
+"""
+
+@ctx.action_class("user")
+class UserActions:
+    def my_custom_action(text: str):
+        actions.next(f"Windows says: {text}")
+```
+
+This implements `user.my_custom_action` specifically for Notepad on Windows. `actions.next()` calls the next implementation in the context stack.
+# Talon Voice Development Guide
+
+This guide provides an overview of how to work with [Talon](https://talonvoice.com/docs/). Talon uses `.talon` files for voice commands and Python (`.py`) files for more complex logic.
+
+The user's scripts are located in `~/.talon/user`. The current workspace is the `community` repository, a collection of shared Talon scripts. Custom user scripts (such as the ones we are creating) are placed in the `custom/` directory.
+
+## `.talon` Files
+
+`.talon` files define voice commands and are context-sensitive.
+
+### Structure
+
+A `.talon` file has two parts, separated by `---`:
+
+1.  **Context Header:** Above the `---`. Defines when the commands are active.
+    ```talon
+    # activate this .talon file if the current app name is "Chrome"
+    app.name: Chrome
+    # and the OS is mac
+    os: mac
+    ```
+2.  **Body:** Below the `---`. Contains command definitions, settings, and tag declarations.
+
+### Commands
+
+Commands map a spoken phrase (rule) to an action (body).
+
+`rule: body`
+
+**Example:**
+```talon
+# hello.talon
+hello talon: "hello world"
+```
+Saying "hello talon" will type "hello world".
+
+The rule syntax is powerful:
+- `[optional]`: Optional words.
+- `(choice one | choice two)`: Alternative phrases.
+- `<capture>`: Captures spoken words, like numbers or dictation. Example: `<user.number_string>`.
+- `{list}`: Matches words from a defined list.
+
+The body is Talonscript, which can:
+- Insert text: `insert("text")`
+- Press keys: `key(ctrl-shift-a)`
+- Call actions defined in Python: `user.my_custom_action()`
+
+## Python Scripts (`.py`)
+
+Python is used for more complex logic.
+
+### File Naming and Structure
+
+In the `community` repository, it is common to see a set of files for a single application:
+- `app_name.py`: Defines generic, cross-platform actions and logic using a `Module`.
+- `app_name.talon`: Defines voice commands that are active across all platforms for that app.
+- `app_name_mac.py`, `app_name_win.py`, `app_name_linux.py`: Platform-specific implementations of actions using `Context`.
+- `app_name_mac.talon`, `app_name_win.talon`, `app_name_linux.talon`: Platform-specific voice commands.
+
+New user-specific commands should be placed in the `custom/` directory.
+
+### `Module`
+
+A `Module` is used to *declare* new actions, lists, tags, settings, and captures that can be used in `.talon` files or other python scripts.
+
+```python
+# app.py
+from talon import Module
+
+mod = Module()
+
+@mod.action_class
+class Actions:
+    def my_custom_action(text: str):
+        "A custom action that prints text"
+        print(text)
+```
+
+### `Context`
+
+A `Context` is used to *implement* actions for specific situations (e.g., for a particular application or when a certain tag is active). It can also set lists, settings, and tags for that context.
+
+```python
+# app_win.py
+from talon import Context, actions
+
+ctx = Context()
+ctx.matches = r"""
+os: windows
+app.name: Notepad
+"""
+
+@ctx.action_class("user")
+class UserActions:
+    def my_custom_action(text: str):
+        actions.next(f"Windows says: {text}")
+```
+
+This implements `user.my_custom_action` specifically for Notepad on Windows. `actions.next()` calls the next implementation in the context stack.

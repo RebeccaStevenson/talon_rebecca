@@ -1,0 +1,88 @@
+# How to Add VSCode Commands
+
+This guide explains how to add new voice commands for Visual Studio Code in your Talon setup.
+
+The primary files for VSCode integration are:
+-   `[apps/vscode/vscode.py](mdc:apps/vscode/vscode.py)`: Defines the core Python logic, including custom actions and context management.
+-   `[apps/vscode/vscode.talon](mdc:apps/vscode/vscode.talon)`: Contains the main, cross-platform voice commands.
+
+For user-specific additions, you should use files in the `custom/` directory to avoid conflicts with the community scripts. Examples from your workspace include:
+-   `[custom/vscode_custom.talon](mdc:custom/vscode_custom.talon)`: For general custom commands.
+-   `[custom/vscode_mac.talon](mdc:custom/vscode_mac.talon)`: For macOS-specific commands.
+
+## Adding a Simple Command
+
+Most VSCode features can be triggered by a command ID. You can find these IDs in VSCode by opening the Command Palette (`Please` command in Talon, or `Ctrl/Cmd+Shift+P`) or by looking at the Keyboard Shortcuts settings.
+
+To add a new command, simply add a line to your custom `.talon` file, like `[custom/vscode_custom.talon](mdc:custom/vscode_custom.talon)`.
+
+**Syntax:**
+`spoken phrase: user.vscode("vscode.command.id")`
+
+**Example:**
+```talon
+# custom/vscode_custom.talon
+
+# This command would toggle the file explorer
+show explorer: user.vscode("workbench.view.explorer")
+```
+
+## Platform-Specific Commands
+
+To create a command that only works on a specific operating system, create or edit a context-specific file like `[custom/vscode_mac.talon](mdc:custom/vscode_mac.talon)`. The context header makes the commands inside it only active on that OS.
+
+**Example for macOS:**
+```talon
+# custom/vscode_mac.talon
+app: vscode
+os: mac
+-
+# This command will only be available on macOS
+mac only command: key(cmd-i)
+```
+
+## Advanced Commands with Python
+
+For more complex logic, you can define custom actions in Python. It's best practice to create a `custom/vscode.py` file to keep your custom logic separate from the community `apps/vscode/vscode.py`.
+
+**Example Workflow:**
+
+**1. Create/edit `custom/vscode.py` to define a new action:**
+
+```python
+from talon import Context, Module, actions
+
+# It's good practice to create a module for your custom actions
+mod = Module()
+
+@mod.action_class
+class Actions:
+    def my_custom_vscode_action(text: str):
+        """A custom action to do something in VSCode"""
+        # This is where you declare the action.
+        # A default implementation is optional.
+        pass
+
+# Then, create a context to implement the action
+ctx = Context()
+ctx.matches = r"""
+app: vscode
+"""
+
+@ctx.action_class("user")
+class UserActions:
+    def my_custom_vscode_action(text: str):
+        """Implementation of the custom action"""
+        actions.insert(f"You said: {text}")
+        actions.user.vscode("workbench.action.showCommands")
+```
+
+**2. Call your new action from a `.talon` file (e.g., `custom/vscode_custom.talon`):**
+
+```talon
+# custom/vscode_custom.talon
+app: vscode
+-
+say something <user.text>: user.my_custom_vscode_action(text)
+```
+Now, saying "say something hello world" would type "You said: hello world" and then open the command palette in VSCode.

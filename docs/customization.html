@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>customization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="customization_files/libs/clipboard/clipboard.min.js"></script>
+<script src="customization_files/libs/quarto-html/quarto.js"></script>
+<script src="customization_files/libs/quarto-html/popper.min.js"></script>
+<script src="customization_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="customization_files/libs/quarto-html/anchor.min.js"></script>
+<link href="customization_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="customization_files/libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="customization_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="customization_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="customization_files/libs/bootstrap/bootstrap-fe6593aca1dacbc749dc3d2ba78c8639.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="basic-customization" class="level1">
+<h1>Basic customization</h1>
+<p>Once you have successfully <a href="../Resource%20Hub/Talon%20Installation/installation_guide">set up Talon</a> you may find that you would like to change some of how it behaves at a basic level.</p>
+<section id="customization-overview" class="level2">
+<h2 class="anchored" data-anchor-id="customization-overview">Customization overview</h2>
+<p>All customization consists of files with <code>.talon</code> or <code>.py</code> file extensions placed in the Talon user directory. The Talon user directory is where you put the <a href="https://github.com/talonhub">Talon Community</a> user file set (<code>~/.talon/user/</code> on MacOS/Linux, <code>%APPDATA%\Talon\user</code> on Windows). Talon doesn’t care how you organize your files within this directory, any subdirectories or file names are just there to make things easier to understand for you and others.</p>
+<p>So why do we have two kinds of configuration/scripting files (<code>.py</code> and <code>.talon</code>)?</p>
+<ul>
+<li><code>.talon</code> files provide a succinct way of mapping spoken commands to behaviour. <code>.talon</code> files are written in a language that is only used by Talon.
+<ul>
+<li><code>.talon</code> files are designed to be simple and to provide good feedback if you make mistakes.</li>
+</ul></li>
+<li><code>.py</code> files are Python scripts that provide the implementation of behaviour and other functionality used by <code>.talon</code> files.
+<ul>
+<li>You do not need to customize Python or know how to code to use Talon</li>
+</ul></li>
+</ul>
+</section>
+<section id="managing-your-customizations" class="level2">
+<h2 class="anchored" data-anchor-id="managing-your-customizations">Managing your customizations</h2>
+<p>Talon is built to be a flexible and customizable system. This means that in addition to being able to add new voice commands you can also override the behavior of existing commands reasonably easily.</p>
+<p>Given this flexibility, there are two ways you could approach customizing your Talon setup:</p>
+<ul>
+<li>Option A: Edit the <code>.talon</code> and <code>.py</code> files from the <a href="https://github.com/talonhub/community">Talon Community</a> directly.
+<ul>
+<li>Can be easier to begin with, but may be difficult to keep up-to-date with upstream.</li>
+<li>You need to work out what you modified and how to re-apply it to the <a href="https://github.com/talonhub/community">Talon Community</a> user file set every time you update it.</li>
+</ul></li>
+<li>Option B: Maintain your own separate directory with your customizations that sits alongside the <a href="https://github.com/talonhub/community">Talon Community</a>. (<strong>Recommended</strong>)
+<ul>
+<li>The screenshot below shows a Talon user directory with multiple user file sets. The <code>community</code> directory contains the <a href="https://github.com/talonhub/community">Talon Community</a> unchanged from the version on GitHub. The rest of the folders are other file sets that supplement the Talon Community file set.</li>
+<li>For example, <code>my_talon</code> contains personal customizations, and <code>curserless-talon</code> contains the <a href="https://github.com/cursorless-dev/cursorless">Cursorless</a>.</li>
+</ul></li>
+<li>Option C: Add your customizations to the <code>custom</code> directory within the community repository clone.
+<ul>
+<li>This approach allows you to keep your personal scripts version-controlled along with the community scripts. The <code>custom</code> directory is intended for user-specific customizations and is ignored by a <code>.gitignore</code> file, which can reduce merge conflicts when pulling updates from the main community repository. This offers a good middle ground between modifying community files directly and maintaining a completely separate folder.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./img/talon_user_folders.png" class="img-fluid figure-img"></p>
+<figcaption>Screen shot of Talon user directory</figcaption>
+</figure>
+</div>
+<section id="backups" class="level3">
+<h3 class="anchored" data-anchor-id="backups">Backups</h3>
+<p>You will probably want to update your Talon Community user file set occasionally in order to pick up new features and bug fixes. Unfortunately changing Talon Commmunity may also sometimes add new bugs! If this happens you might want to go back the older version so you can keep working. Use <code>git</code> if you are familiar, and if you’re not, then just making a <code>.zip</code> backup of the whole Talon user directory prior to making a potentially significant change also works.</p>
+</section>
+</section>
+<section id="a-simple-.talon-file" class="level2">
+<h2 class="anchored" data-anchor-id="a-simple-.talon-file">A simple .talon file</h2>
+<p>Let’s make a new voice command that presses the key combination <code>cmd+a</code> or <code>control+a</code> when you say “select everything”.</p>
+<p>Open up a text editor and save an empty file called <code>simple_test.talon</code> somewhere in your Talon user directory. Next, right-click on the Talon icon in your status bar, choose ‘Scripting’, and then ‘View log’. This will show a list of log messages from Talon, and in particular, will be where Talon tells us if there’s a problem with what we write in <code>simple_test.talon</code>.</p>
+<p>OK, let’s get to defining the command. If you’re running MacOS, copy/paste the following into your editor and save the file (ensure you have the spaces at the start of the ‘key’ line):</p>
+<pre class="talon"><code>select everything:
+    key(cmd-a)</code></pre>
+<p>If you’re on Windows or Linux you can use this instead:</p>
+<pre class="talon"><code>select everything:
+    key(ctrl-a)</code></pre>
+<p>You should see a line like <code>2021-09-02 17:33:36 DEBUG [+] /home/normal/.talon/user/mystuff/simple_test.talon</code> printed in your Talon log. This indicates that Talon has picked up your new/updated file and has loaded it. In general, Talon will automatically pick up and apply any changes to <code>.talon</code> or <code>.py</code> files in your Talon user directory, so you don’t have to restart Talon each time you make a change. If you don’t see a line like that and can’t figure it out, then you might want to ask for help on the <a href="https://talonvoice.com/chat">Talon slack</a> in the #help channel.</p>
+<p>Your command should now be defined, so if you focus your text editor and say “select everything” it should indeed select everything.</p>
+<section id="error-messages" class="level3">
+<h3 class="anchored" data-anchor-id="error-messages">Error messages</h3>
+<p>OK, let’s now deliberately introduce an error so we can see how Talon tells us about that. Edit your file and remove the final ‘)’ character so the last line is ” key(cmd-a” or ” key(ctrl-a”. Save the file and look at your Talon log. For me, Talon writes out the following:</p>
+<pre><code>    2021-09-02 17:46:02 DEBUG [-] /home/normal/.talon/user/simple_test.talon
+    2021-09-02 17:46:02 DEBUG [+] /home/normal/.talon/user/simple_test.talon
+    2021-09-02 17:46:02 ERROR     8:                         talon/scripting/talon_script.py:705|
+        7:                lib/python3.9/site-packages/lark/lark.py:561|
+        6:    lib/python3.9/site-packages/lark/parser_frontends.py:107|
+        5: lib/python3.9/site-packages/lark/parsers/lalr_parser.py:41 |
+        4: lib/python3.9/site-packages/lark/parsers/lalr_parser.py:171|
+        3: lib/python3.9/site-packages/lark/parsers/lalr_parser.py:188|
+        2: lib/python3.9/site-packages/lark/parsers/lalr_parser.py:182|
+        1: lib/python3.9/site-packages/lark/parsers/lalr_parser.py:129|
+    lark.exceptions.UnexpectedToken: Unexpected token Token('$END', '') at line 1, column 5.
+    Expected one of:
+        * RPAR
+
+
+        1: lib/python3.9/site-packages/lark/parsers/lalr_parser.py:126|
+    KeyError: '$END'
+
+    [The below error was raised while handling the above exception(s)]
+    2021-09-02 17:46:02 ERROR Failed to parse TalonScript in "user.simple_test.talon" for "select everything"
+       16:      lib/python3.9/threading.py:912* # cron thread
+       15:      lib/python3.9/threading.py:954*
+       14:      lib/python3.9/threading.py:892*
+       13:                   talon/cron.py:155|
+       12:                   talon/cron.py:106|
+       11:                     talon/fs.py:64 |
+       10:                     talon/fs.py:57 |
+        9:         talon/scripting/rctx.py:233| # 'fs' main:on_change()
+        8:         app/resources/loader.py:689|
+        7:         app/resources/loader.py:639|
+        6:         app/resources/loader.py:517|
+        5:         app/resources/loader.py:501|
+        4:      talon/scripting/context.py:520|
+        3:      talon/scripting/context.py:436| # [stack splice]
+        2: talon/scripting/talon_script.py:719|
+        1: talon/scripting/talon_script.py:713|
+    talon.scripting.talon_script.CompileError:   Line: 1, Column: 5 - unexpected token
+          key(ctrl-a
+              ^
+      Expected: )
+     in script at /home/normal/.talon/user/simple_test.talon:2:
+      key(ctrl-a</code></pre>
+<p>So that’s quite a lot of output. The useful bit is at the bottom:</p>
+<pre><code>    talon.scripting.talon_script.CompileError:   Line: 1, Column: 5 - unexpected token
+          key(ctrl-a
+              ^
+      Expected: )
+     in script at /home/normal/.talon/user/simple_test.talon:2:
+      key(ctrl-a</code></pre>
+<p>You can see it has the “in script at /home/normal/.talon/user/simple_test.talon:2:” line. This tells us the file the problem occurred in, and also the (maybe approximate) line number the problem was on, ‘2’ in our case. There is also some suggestive text indicating that Talon was expecting a ‘)’ character. The error message you get will depend on the problem with what you’ve written, but it should always tell you which file has the problem in it, and also the approximate line the problem was on.</p>
+<p>OK, we’re finished with this file now so you can delete it.</p>
+</section>
+</section>
+<section id="talon-file-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="talon-file-syntax">.talon file syntax</h2>
+<p>Talon files look something like this:</p>
+<pre class="talon"><code>title: /Gmail/
+-
+
+# Define a voice command with an associated function
+find on page: key(ctrl-f)
+
+reload page:
+    key(ctrl-r)
+
+insert bold text:
+    key(ctrl-b)
+    insert("type in this text (it will be bolded)")
+    key(ctrl-b)</code></pre>
+<p>The part above the ‘-’ line is called the “context header” and the part below is the “body”. The context header decides under what circumstances the rest of the file will be active. The body defines voice commands and other behaviour.</p>
+<section id="context-header" class="level3">
+<h3 class="anchored" data-anchor-id="context-header">Context header</h3>
+<p>The context header defines when the rest of the file will be active.</p>
+<p>In this example, our context header says that the file is only active when the word ‘Gmail’ is in the window title. The context header is optional; if it is not included (as in our simple_test.talon example) then the file is always active.</p>
+</section>
+<section id="body" class="level3">
+<h3 class="anchored" data-anchor-id="body">Body</h3>
+<p>The body can have several kinds of content. Most often you’ll be defining voice commands, so that’s all we’ll talk about here.</p>
+<p>Voice commands start with the actual words you want to speak followed by a ‘:’ character. They then list out all the actions you want to perform as a result of that command. If you only want to perform a single action then you can put it on a single line as in the first ‘find on page’ command. If you have more than one action you must put each action on its own line. The actions associated with a command must be indented with spaces, but it doesn’t matter how many you use. Separate voice commands with one or more blank lines.</p>
+</section>
+<section id="actions-in-.talon-files" class="level3">
+<h3 class="anchored" data-anchor-id="actions-in-.talon-files">Actions in .talon files</h3>
+<p>You might have noticed that we’ve been using the key() and insert() actions in the example files so far. There are a number of built in actions, and extra actions can be defined in <code>.py</code> files. To get a complete list of defined actions you can do the following:</p>
+<ol type="1">
+<li>Right click on the Talon icon in your status bar, choose scripting, and then ‘Console (REPL)’. This will open a terminal window where you type Python commands and the results of those commands are printed out.</li>
+<li>Type <code>actions.list()</code> and press enter. This will list out all the available actions.</li>
+<li>You might like to look at this list of actions in your text editor (so you can search them, for example). To put the full list into your clipboard, copy and paste this code into the Talon console and press enter:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io<span class="op">;</span>old<span class="op">=</span>sys.stdout<span class="op">;</span>sys.stdout <span class="op">=</span> io.StringIO()<span class="op">;</span>actions.<span class="bu">list</span>()<span class="op">;</span>clip.set_text(sys.stdout.getvalue())<span class="op">;</span>sys.stdout <span class="op">=</span> old</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Some of the more useful actions are:</p>
+<ul>
+<li><code>key(ctrl-a)</code> - Presses the keys within the parentheses. See the ‘Add new keyboard shortcuts’ recipe below for some more info about using this action.</li>
+<li><code>insert("my text")</code> - Types in the text “my text”</li>
+<li><code>sleep(100ms)</code> - Waits for 100 milliseconds. This can be useful if you need to wait for your target application to do something. Don’t make the sleep too long because Talon will not respond to voice commands while sleeping.</li>
+<li><code>mouse_move(100, 200)</code> - Moves the mouse to screen coordinates 100 pixels from the left and 200 from the top.</li>
+<li><code>mouse_scroll(0, -10)</code> - Scrolls the mouse 10 ‘units’ to the left. <code>mouse_scroll(10)</code> would scroll the mouse 10 ‘units’ down. Note that the arguments are y, x rather than x, y.</li>
+<li><code>mouse_click(0)</code> - Clicks the left mouse button at the cursor. <code>mouse_click(1)</code> right clicks.</li>
+</ul>
+</section>
+</section>
+<section id="recipes" class="level2">
+<h2 class="anchored" data-anchor-id="recipes">Recipes</h2>
+<p>If you’ve read the above you should have some idea of how to make customizations to Talon, particularly using <code>.talon</code> files. This section contains a recipe list of some common/instructive customizations you might like to make.</p>
+<section id="add-new-keyboard-shortcuts" class="level3">
+<h3 class="anchored" data-anchor-id="add-new-keyboard-shortcuts">Add new keyboard shortcuts</h3>
+<p>Often you will want to add a new voice command to press an application-specific keyboard shortcut. Let’s choose the YouTube webpage as our example. The following <code>.talon</code> file defines two new voice commands:</p>
+<pre class="talon"><code>title: /YouTube/
+-
+toggle play: key("space")
+
+search cats:
+    key("/")
+    sleep(100ms)
+    insert("cats")
+    key("enter")</code></pre>
+<p>These commands only apply when the window title has “YouTube” in it. “search cats” first presses the “/” key to focus the YouTube search box, then waits 100 milliseconds to make sure it has been focussed, then types in “cats” and presses enter.</p>
+</section>
+<section id="slow-down-key-presses" class="level3">
+<h3 class="anchored" data-anchor-id="slow-down-key-presses">Slow down key presses</h3>
+<p>A reasonably common problem that comes up when using Talon with computer games is that the application only recognizes key presses intermittently or not at all. This can be because Talon presses and releases the keys too quickly. The following <code>.talon</code> file makes Talon hold down each key for 32 milliseconds before releasing it. You could try increasing the key_hold value incrementally to find the smallest length of time you need to hold for the key to be recognized reliably:</p>
+<pre class="talon"><code>app.exe: my_game.exe
+-
+settings():
+    key_hold = 32</code></pre>
+<p>Note the use of app.exe as the context matcher to match the filename of the active program. See the <a href="../Customization/talon-files.md#context-header">unofficial docs</a> for a full list of available matchers.</p>
+<section id="settings" class="level4">
+<h4 class="anchored" data-anchor-id="settings">Settings</h4>
+<p><code>key_hold</code> isn’t the only or necessarily the best setting for your keyboard issue. There are also many other settings for configuring other aspects of Talon’s behaviour.</p>
+<p>settings() blocks can be put in any <code>.talon</code> file and are used to change the value of settings given a matching context header. You can have multiple settings by putting each on its own indented line underneath the “settings():” line. You can include voice commands in the same file as a settings block.</p>
+<p>You can paste the following code into the REPL to see a full list of available settings: <code>settings.list()</code>. A list of some of the more useful ones is <a href="../Customization/talon-files.md#tags-settings-and-other-capabilities">included here</a>. <a href="https://github.com/talonhub/community">Talon Community</a> also has a list of some extra settings it defines in the <code>settings.talon</code> file.</p>
+</section>
+</section>
+<section id="keyboard-shortcuts" class="level3">
+<h3 class="anchored" data-anchor-id="keyboard-shortcuts">Keyboard shortcuts</h3>
+<p>You have the ability to set keyboard shortcuts in <code>.talon</code> files. The following <code>.talon</code> file toggles whether Talon is listening to speech when you press the ctrl + t key combination:</p>
+<pre><code>key(ctrl-t): speech.toggle()</code></pre>
+<p>The shortcut is global since there’s no context matcher in this <code>.talon</code> file restricting it to a particular application for example. You could replace speech.toggle() with the same types of things that you would use in a voice command.</p>
+</section>
+<section id="overriding-existing-voice-commands" class="level3">
+<h3 class="anchored" data-anchor-id="overriding-existing-voice-commands">Overriding existing voice commands</h3>
+<p>One thing that may not be immediately obvious is that re-using voice commands is perfectly acceptable. You can just create a new <code>.talon</code> file with a new context header and redefine the command.</p>
+<p>This also provides a simple way of overriding the behaviour of existing voice commands from the <a href="https://github.com/talonhub/community">Talon Community</a> user file set. Let’s say you wanted to change the behaviour of the <code>touch</code> command so that it didn’t hide the mouse grid if it was open.</p>
+<p>The existing code is in a <code>.talon</code> file without a context header called <code>mouse.talon</code>:</p>
+<pre class="talon"><code>touch:
+    mouse_click(0)
+    # Close the mouse grid if open
+    user.grid_close()
+    # End any open drags
+    # Touch automatically ends left drags so this is for right drags specifically
+    user.mouse_drag_end()</code></pre>
+<p>We can see the <code>user.grid_close()</code> action is called to close the grid after clicking the mouse. Also, note the lines starting with ‘#’ characters are called comments. They are just there for documentation and will not be otherwise processed by Talon.</p>
+<p>If we wanted to stop the <code>user.grid_close()</code> behaviour we could just create a new <code>.talon</code> file and put in the following contents:</p>
+<pre class="talon"><code>os: mac
+-
+touch:
+    mouse_click(0)
+    # End any open drags
+    # Touch automatically ends left drags so this is for right drags specifically
+    user.mouse_drag_end()</code></pre>
+<p>Notice that we’ve given it a context header. Because this context header is more specific (i.e.&nbsp;it has more rules in it) this implementation of “touch” will take precedence over the original. The implementation just has the <code>user.grid_close()</code> line and associated comment removed.</p>
+<p>In general, you can use this technique by just making a version of the <code>.talon</code> file you want to override and putting in more redundant rules to make it the more specific version. In addition to “os:” some other redundant filters you can add are “mode: command” (assuming you want to define the command in the default ‘command’ mode) and “speech.engine: wav2letter” (assuming you’re not using Dragon).</p>
+<p>This is a simple way of overriding voice commands using <code>.talon</code> files. Many other parts of the system (such as the behaviour of actions) can also be overridden, but this requires editing <code>.py</code> files.</p>
+</section>
+<section id="finding-what-a-command-does-so-that-you-can-add-a-different-voice-command" class="level3">
+<h3 class="anchored" data-anchor-id="finding-what-a-command-does-so-that-you-can-add-a-different-voice-command">Finding what a command does so that you can add a different voice command</h3>
+<p>Remapping or adding new voice commands for actions like in the above only works if you know what the original command is doing. The easiest way to find that out is <a href="https://talon.wiki/customization/misc-tips/#introspection-functions">using the repl introspection functions</a>.</p>
+<p>Opened the repl from the talon menu or by saying “talon open rebel”. This opens up a text console. Type in <code>events.tail()</code>, and press enter. Perform the speech command that you want to know about then look at the final line in the text output. You should see something like “[34911.282] user/community/core/windows_and_tabs/windows_and_tabs_linux.py | action <strong>key(‘ctrl-tab’)</strong>” - the final part tells you the command that is being used. Sometimes the last line is too specific, and there may be a more generic line further up the list. For example, in the following list, the action “app.tab_previous()” is the generic command, and the others are more specific sub-commands called by the engine to enact that phrase. Figuring out which one is best may require some guesswork and trial and error.</p>
+<pre><code>[35424.335] user/community/plugin/command_history/command_history.py | action user.history_transform_phrase_text(['tab', 'previous'])
+[35424.337] user/community/plugin/command_history/command_history.py | action speech.enabled()
+[35424.337] user/community/plugin/subtitles/on_phrase.py | action speech.enabled()
+[35424.338] user/community/core/windows_and_tabs/tabs.talon | action app.tab_previous()
+[35424.338] user/community/core/windows_and_tabs/windows_and_tabs_linux.py | action key('ctrl-shift-tab')</code></pre>
+<p>You can then add a mapping to that command in a talon file somewhere in your user folder, like</p>
+<pre class="talon"><code>os: mac
+-
+tab left:  app.tab_previous()</code></pre>
+<p>================================================ FILE: docs/Customization/misc-tips.md ================================================</p>
+</section>
+</section>
+</section>
+<section id="tips-and-tricks" class="level1">
+<h1>Tips and tricks</h1>
+<p>This section contains some additional miscellaneous information which may be useful for developing and debugging Talon scripts.</p>
+<section id="repl-and-logging" class="level2">
+<h2 class="anchored" data-anchor-id="repl-and-logging">REPL and logging</h2>
+<p>Talon comes with a Python Read Eval Print Loop (REPL) which can be accessed from the Scripting menu. This lets you try out actions and use the introspection functions mentioned below. If you have the community grammars installed you can also access this by voice using “talon open rebel”.</p>
+<p>There is also a <code>repl</code> executable in the <code>bin</code> subdirectory of your Talon home folder. You can pipe REPL commands into that and they will be executed in the running Talon environment. This is often used as a RPC interface to Talon. For example executing a line like this on Linux would toggle whether Talon is listening to the microphone: <code>bash -c "echo 'actions.speech.toggle()' | ~/.talon/bin/repl"</code>.</p>
+<p>Talon also has basic logging functionality. If you have run Talon from the terminal you will have seen the output, but it can also be viewed using the ‘Scripting -&gt; View log’ menu item or directly in the <code>talon.log</code> file in your Talon home folder. To add to the log from your script simply use the Python <code>print()</code> function, though in general this is only used for debugging.</p>
+</section>
+<section id="introspection-functions" class="level2">
+<h2 class="anchored" data-anchor-id="introspection-functions">Introspection functions</h2>
+<p>This section lists some built in methods which are useful for developing or debugging Talon behaviour. The following are all imported by default into the REPL and aren’t really meant to be used outside that context.</p>
+<ul>
+<li><code>sim("tab close")</code> - Finds the .talon file that would handle the given command in the current context. If the command is not active in the current context, then it prints an error. Useful for finding the relevant code for a voice command. You might want to paste something like <code>import time;time.sleep(5);sim("tab close")</code> in to the REPL to give you a chance to switch to the appropriate context.</li>
+<li><code>mimic("say hello world")</code> - Executes the given voice command like you spoke it in to the microphone. Can be useful to re-run voice commands while editing them so you don’t have to keep saying the same thing.</li>
+<li><code>actions.find("string")</code> - Searches the name, documentation, and code implementing an action for the given substring. Prints out a list of matches.</li>
+<li><code>actions.list("edit")</code> - Prints out all registered actions matching the given prefix. If no argument is supplied then lists all actions. See the basic customization page for a trick to copy this output into your clipboard.</li>
+<li><code>events.tail()</code> - If you’re not getting enough information about what Talon is doing from the log file you can take a look at this method. It prints out Talon internal events, user actions called, scope changes etc. to the REPL. For even more logging try the <code>events.tail(noisy=True)</code> flag. You can also print out historical events and filter the events, run <code>help(events.tail)</code> to see the options.</li>
+<li><code>registry.commands</code>, <code>registry.lists</code> etc. - Lets you view the currently active set of commands, lists, actions etc. that Talon is considering.</li>
+</ul>
+<section id="api-functions" class="level3">
+<h3 class="anchored" data-anchor-id="api-functions">API functions</h3>
+<p>Talon provides an API under the <code>talon</code> package allowing you to perform various actions from Python. Some examples are window management and drawing overlays. Talon is closed source, but does provide class, method, and module signatures as <code>.pyi</code> files in the <code>resources/python/lib/python3.9/site-packages/talon/</code> folder. These files can also be linked to by your IDE to provide autocompletion etc. Note that many of the <code>.pyi</code> files are internally facing, but it’s generally fairly clear what’s intended to be stable and used by user scripts.</p>
+<p>A quick pointer to some APIs follows:</p>
+<ul>
+<li><code>__init__.pyi</code> - The main API functionality is imported here (e.g.&nbsp;Module, Context, actions). This is what you import when you include <code>import talon</code> in your code.</li>
+<li><code>ui.pyi</code> - window and workspace management functionality and focus change events. OS specific functionality is imported at the top of the file from <code>(linux|mac|windows)/ui.pyi</code>.</li>
+<li><code>clip.pyi</code> - Cross platform clipboard monitoring and management.</li>
+<li><code>cron.pyi</code> - Periodic tasks, use this for polling or background tasks so as not to block the main Talon thread.</li>
+<li><code>screen.pyi</code> - Monitor/screen management querying functionality (e.g.&nbsp;get dimensions of screen), also screenshot functions.</li>
+<li><code>imgui.pyi</code> - A simple GUI system for drawing basic floating windows including text and buttons.</li>
+<li><code>canvas.pyi</code> - A floating canvas implementation with transparency that optionally captures mouse and keyboard events. See also the <code>talon.skia</code> package which provides the drawing functions (based on <a href="https://skia.org/docs/">the Skia library</a>).</li>
+<li><code>noise.pyi</code> - Register for pop and hiss noise events.</li>
+<li><code>experimental/</code> - This package contains experimental APIs which may change in signature or be removed.</li>
+<li><code>ctrl.pyi</code> - ‘Low level’ mouse and keyboard event injection. You should prefer using the exposed mouse/keyboard actions rather than this.</li>
+<li><code>fs.pyi</code> - Watch files and folders for changes.</li>
+</ul>
+<p>You are also able to use almost all of the CPython standard library. So you can use that do do network requests, maths operations, or execute subprocesses for example. Other Python packages like numpy may be included in the Talon distribution as an implementation detail, but are not guaranteed to be included forever.</p>
+<p>An escape hatch for this kind of thing is the <code>.venv</code> folder in your Talon home directory. The <code>pip</code> executable in the <code>bin</code> subdirectory of your Talon home directory allows you to install arbitrary Python packages in to that. You’re generally a bit on your own with this and may have difficulty building binary packages. For this reason it is discouraged to ask users of any public package you build to install things in their venv.</p>
+<p>================================================ FILE: docs/Customization/talon-files.md ================================================</p>
+</section>
+</section>
+</section>
+<section id="talon-files" class="level1">
+<h1><code>.talon</code> Files</h1>
+<p>The primary way to extend Talon is using <code>.talon</code> files placed anywhere in the <code>user</code> directory. A Talon file comes in two parts:</p>
+<ul>
+<li>A <a href="#context-header">context header</a> defining the circumstances in which the file is active</li>
+<li>A body that implements various behaviors within that context which can:
+<ul>
+<li>Define <a href="#voice-commands">voice commands</a>.</li>
+<li>Trigger actions on <a href="#keyboard-shortcuts">keyboard shortcuts</a></li>
+<li><a href="#tags-settings-and-other-capabilities">Activate registered tags or apps and change settings</a>.</li>
+</ul></li>
+</ul>
+<p>An example <code>.talon</code> file might look like this:</p>
+<pre class="talon"><code># Comments start with a # sign, and they must always be on their own line.
+#
+# This part, the context header, defines under which circumstances this file applies.
+os: windows
+os: linux
+app: Slack
+app: Teams
+# Anything above this (single!) dash is part of the context header.
+-
+# Anything below the dash is part of the body.
+# If there is no dash, then the body starts immediately.
+
+# These define voice commands.
+([channel] unread next | goneck): key(alt-shift-down)
+insert code fragment:
+    # A single command can perform a sequence of actions.
+    insert("``````")
+    key(left left left)
+    # the number of times the key should be pressed can be specified after a colon
+    key(shift-enter:2)
+    key(up)
+
+# This activates the tag 'user.tabs'.
+tag(): user.tabs
+
+# This adjusts settings (within this file's context).
+settings():
+    key_wait = 1.5</code></pre>
+<section id="context-header-1" class="level2">
+<h2 class="anchored" data-anchor-id="context-header-1">Context header</h2>
+<p>The context header specifies when the body of the file will be activated. That is, only when the requirements of the header are met will the settings, tags, and commands in the body be available. This enables you to specify commands and behaviour that are only available for specific windows, applications, etc.</p>
+<p>The following requirements can be set:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 92%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Matcher</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>os</code></td>
+<td>require specific operating systems; currently either <code>linux</code>, <code>mac</code>, or <code>windows</code></td>
+</tr>
+<tr class="even">
+<td><code>tag</code></td>
+<td>require a specific tag</td>
+</tr>
+<tr class="odd">
+<td><code>mode</code></td>
+<td>only active for specific Talon modes (like <code>command</code>, <code>dictation</code>, <code>sleep</code> et al.)</td>
+</tr>
+<tr class="even">
+<td><code>app</code></td>
+<td>match applications by explicitly declared, well-known name</td>
+</tr>
+<tr class="odd">
+<td><code>app.name</code></td>
+<td>match applications by name (TODO where does Talon read this out?)</td>
+</tr>
+<tr class="even">
+<td><code>app.exe</code></td>
+<td>match applications by executable, like <code>/usr/lib/firefox/firefox</code> or <code>firefox.exe</code></td>
+</tr>
+<tr class="odd">
+<td><code>app.bundle</code></td>
+<td>match applications by their MacOS bundle, like <code>com.mozilla.Firefox</code></td>
+</tr>
+<tr class="even">
+<td><code>title</code></td>
+<td>match a window title</td>
+</tr>
+<tr class="odd">
+<td><code>code.language</code></td>
+<td>specify a currently active programming language</td>
+</tr>
+<tr class="even">
+<td><code>language</code></td>
+<td>specify the particular human language (e.g.&nbsp;<code>pt_BR</code>, <code>en</code>) for the file. Defaults to <code>en</code> if not specified. Currently only needed for multilingual webspeech.</td>
+</tr>
+<tr class="odd">
+<td><code>hostname</code></td>
+<td>match the ‘hostname’ of your machine (from the <code>hostname</code> CLI command on Linux/Mac). Useful if you want to have a single set of custom config but have some machine-specific parts.</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, you can create user <code>scope</code>s. <code>scope</code>s allow matching on additional arbitrary string information supplied by user scripts. For example you might write a <code>scope</code> called <code>slack_workspace_name</code>. You’d then be able to make .talon files that only matched a particular Slack workspace by putting a line like ‘user.slack_workspace_name: Talon’ in the header. See <a href="./Talon%20Framework/scopes">the scope concept section</a> below for more information.</p>
+<p>Each individual header line has the format <code>[and] [not] &lt;requirement or scope name&gt;: (&lt;literal match value&gt; | /&lt;regex match value&gt;/&lt;python regex flags&gt;)</code> where <code>[]</code> indicates an optional token, <code>(|)</code> indicates exclusive options, and <code>&lt;&gt;</code> a special segment. Some examples of valid lines are <code>title: foo</code>, <code>title: /foo/i</code>, <code>and tag: user.bar</code>, <code>not tag: /foo/</code>, and <code>and not tag: user.foo</code>.</p>
+<p>We’ve already indicated what requirements and scopes are, so lets move on to the matcher part (on the right of the ‘:’). This can either be a literal string match like <code>title: foo</code> (matching a window whose entire title is ‘foo’), or a regular expression. The regular expression engine essentially uses the Python <code>re.search()</code> function to see if the value of the requirement or scope matches. So for the <code>title: /foo/i</code> example we’d match any window whose title had the string ‘foo’ in it in a case insensitive manner (due to the ‘i’ flag). For requirement types that have multiple values (tag and mode), Talon iterates through each active tag or mode and matches the header line if any of those match the regex or string literal.</p>
+<p>Talon lets you combine multiple lines in the context header. This acts as a composite matcher following specific rules. In the following examples the comment contains an expression describing what the rule will match, e.g.&nbsp;<code>paint_app or (windows and not notepad_app)</code>. In this case the expression would match the when the app <code>paint_app</code> is active or the operating system is <code>windows</code> and the app <code>notepad_app</code> is not active.</p>
+<pre class="talon"><code># paint_app or notepad_app
+app: paint_app
+app: notepad_app</code></pre>
+<pre class="talon"><code># (paint_app or notepad_app) and windows
+app: paint_app
+os: windows
+app: notepad_app</code></pre>
+<pre class="talon"><code># (paint_app and windows) or notepad_app
+app: paint_app
+and os: windows
+app: notepad_app</code></pre>
+<pre class="talon"><code># paint_app and not windows
+app: paint_app
+not os: windows</code></pre>
+<p>So without modifiers, requirements of the same type (e.g.&nbsp;two apps) are OR-ed together. Requirements of different types (e.g.&nbsp;‘app’ and ‘os’) are AND-ed together. The ‘and’ modifier looks at the previous requirement and merges with it to make a compound expession. The ‘not’ modifier just negates the condition.</p>
+</section>
+<section id="voice-commands" class="level2">
+<h2 class="anchored" data-anchor-id="voice-commands">Voice commands</h2>
+<p>A voice command has the format <code>RULE: BODY</code>, where <code>RULE</code> determines what words activate the command, and <code>BODY</code> defines what the command does when activated:</p>
+<pre class="talon"><code># -------- RULE ----------------  ------ BODY -------
+([channel] unread next | goneck): key(alt-shift-down)</code></pre>
+<p>This command, for example, will press the shortcut alt-shift-down whenever you say either “channel unread next”, “unread next”, or “goneck”.</p>
+<section id="rules" class="level3">
+<h3 class="anchored" data-anchor-id="rules">Rules</h3>
+<p>Rules have a versatile syntax that is like a word based regex:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Syntax</th>
+<th>Description</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>foo</code></td>
+<td>Words</td>
+<td>“foo”</td>
+</tr>
+<tr class="even">
+<td><code>[foo]</code></td>
+<td>Optional</td>
+<td>“foo” or null (nothing)</td>
+</tr>
+<tr class="odd">
+<td><code>foo*</code></td>
+<td>Zero or more</td>
+<td>““,”foo”, “foo foo”, …</td>
+</tr>
+<tr class="even">
+<td><code>foo+</code></td>
+<td>One or more</td>
+<td>“foo”, “foo foo”, …</td>
+</tr>
+<tr class="odd">
+<td><code>foo             \| bar</code></td>
+<td>Choice</td>
+<td>“foo”, “bar”</td>
+</tr>
+<tr class="even">
+<td><code>(foo)</code></td>
+<td>Precedence/grouping</td>
+<td>“foo”</td>
+</tr>
+<tr class="odd">
+<td><code>{some_list}</code></td>
+<td><a href="Talon%20Framework/lists.md">List</a></td>
+<td>Depends on the list.</td>
+</tr>
+<tr class="even">
+<td><code>&lt;some_capture&gt;</code></td>
+<td><a href="Talon%20Framework/captures.md">Capture</a></td>
+<td>Depends on the capture.</td>
+</tr>
+<tr class="odd">
+<td><code>^foo</code></td>
+<td>Start anchor</td>
+<td>See below</td>
+</tr>
+<tr class="even">
+<td><code>foo$</code></td>
+<td>End anchor</td>
+<td>See below</td>
+</tr>
+</tbody>
+</table>
+<p>Rules can be anchored or unanchored. Talon has a system that detects when a user is and isn’t speaking which it uses to break up microphone input into a sequence of ‘utterance blocks’. So if you said “first bit … other … bits” (‘…’ means a sufficiently long pause), then Talon might turn this into three utterance blocks: [“first bit”, “other”, “bits”]. Anchoring a rule requires that it occur at the start or end (or both) of an utterance block.</p>
+<p>For example if the following command were added to the <a href="https://github.com/talonhub/community">Talon Community</a> user file set <code>^my command: "first"</code> and you said “my command air bat cap” then Talon would insert “firstabc”. “air bat cap my command” on the other hand would only produce “abc” (and maybe a misrecognition) because ‘my command’ was not at the start of your utterance. If <code>other command$: "second"</code> were defined and you said “air bat cap other command” you’d get “abcsecond”. If you said “other command air bat cap” you’d just get “second”. Because the command matched and had the $ suffix, the rest of your utterance was thrown away.</p>
+<p>In general you shouldn’t anchor rules since it prevents the user from chaining them together (like we were doing with our examples and the air bat cap commands). Aside from special circumstances you really only consider anchoring when you have a command you wouldn’t chain (e.g.&nbsp;switching from command to dictation mode), or you really want to prevent the command from being called by accident.</p>
+</section>
+<section id="talonscript-body" class="level3">
+<h3 class="anchored" data-anchor-id="talonscript-body">Talonscript Body</h3>
+<p>The BODY part of a command is implemented in Talonscript, a simple statically typed language. We’ll discuss Talonscript and how it interracts with the RULE part of the command with reference to the following <code>.talon</code> file:</p>
+<pre class="talon"><code># The following captures are implemented in the https://github.com/talonhub/community user file set:
+#
+# &lt;user.letter&gt; is a list mapping words like 'plex' or 'gust' to latin letters like 'x' or 'g'
+# &lt;user.number_string&gt; is a capture mapping words like 'five' to number strings like '5'
+# &lt;digits&gt; is a capture that maps a variable length phrase like
+#   "one two three" onto an integer 123
+#
+# The following list does not exist (it's made up for this example):
+#
+# {user.address_book} maps the names 'sally', 'frank' etc. to their email addresses (sally@example.com, frank@example.com)
+
+# Saying "double letter plex" presses ctrl+a then inserts "x." then "x"
+double letter &lt;user.letter&gt;:
+    modified = letter + "."
+    key(ctrl-a)
+    insert(modified)
+    insert(letter)
+
+# Saying "defaultable plex" inserts "x", saying "defaultable" inserts "default"
+defaultable [&lt;user.letter&gt;]:
+    insert(letter or "default")
+
+# Saying "choose plex" inserts "x", saying "choose five" inserts "5"
+choose (&lt;user.letter&gt;|&lt;user.number_string&gt;):
+    insert(letter or number_string)
+
+# Saying "join plex and gust" or "join plex gust" inserts "xg"
+join &lt;user.letter&gt; [and] &lt;user.letter&gt;:
+    insert(letter_1 + letter_2)
+
+# Saying "add one two three and four five six" inserts "579"
+add &lt;digits&gt; and &lt;digits&gt;:
+    insert(digits_1 + digits_2)
+
+# Saying "insert lots plex gust plex" inserts "['x', 'g', 'x']"
+insert lots &lt;user.letter&gt;+:
+    insert(letter_list)
+
+# Saying "type email sally" inserts "sally@example.com"
+# Lists can be used in exactly the same way as captures
+type email {user.address_book}:
+    insert(address_book)</code></pre>
+<p>In the above we can see that the lists and captures in the rule part are bound to variables in the Talonscript based on the name of the list/capture. If we use the same lists/capture in a rule multiple times then each use gets a corresponding _1, _2 suffix. If we make a list/capture optional then we have to handle the case where it isn’t included using “or”. Similarly if we have a choice of matches we have to handle the cases where the alternative was picked. Finally, if we match multiple captures/lists (e.g.&nbsp;with ‘+’), then we can refer to the lot of them with the _list suffix. Individual items from the multiple match can be referred to with the _1, _2 suffix as well.</p>
+<p>In terms of the Talonscript itself, the syntax can be thought of as a very limited subset of Python. Consider the following file which (as of writing) demonstrates all available syntax. See the inline comments for what everything does:</p>
+<pre class="talon"><code># Comments must be on their own line (optionally preceeded by whitespace)
+some [&lt;user.letter&gt;] command:
+    # or operator is used to deal with optional or alternative command parts. It works as the null
+    # coalescing operator, not like boolean or.
+    letter_defaulted = letter or "default"
+
+    # Local variable assignment
+    a = 2.2
+    b = "foo"
+    c = "interpolate the {letter_defaulted} and {b} variables into the string"
+    c = """
+    multiline string
+    """
+    # Only a single mathematical operation per line
+    d = 2
+    a = a + d
+    a = a - d
+    a = a * d
+    a = a / d
+    a = a % d
+
+    # Sleep is a built in function and takes arguments of the (&lt;float&gt;|&lt;integer&gt;&lt;suffix&gt;) form.
+    # Float allows specifying (fractions) of a second. The &lt;integer&gt;&lt;suffix&gt; form can be '1m', '5s', '500ms', '1000000us' etc.
+    # Be aware sleeping in this way will prevent Talon from processing voice commands until the
+    # sleep is over
+    sleep(2s)
+
+    # Repeats the previous line the given number of times, so in this case we'd sleep for a further 4 seconds
+    repeat(2)
+
+    # The key() action. Allows pressing, holding, and repeating individual key presses.
+    # See the "key() action" wiki page for more details
+    key(ctrl-f)
+
+    insert("type in this literal string")
+    auto_insert("process this string with the auto_format action, then type it in with insert()")
+
+    # Stylistically we only recommend the following shorthand if it is the only action being
+    # performed by the command.
+    "type in this string using auto_insert()"
+    """
+    type in this
+    multiline
+    string using auto_insert()
+    """
+
+    # Call built in or user defined actions
+    app.notify("show this in a notification balloon")
+    user.grid_activate()</code></pre>
+</section>
+<section id="tags-settings-and-other-capabilities" class="level3">
+<h3 class="anchored" data-anchor-id="tags-settings-and-other-capabilities">Tags, settings, and other capabilities</h3>
+<p>.talon files can do a few other things aside from defining voice commands.</p>
+<p>The most common usage after voice commands is to adjust <a href="./Talon%20Framework/settings">settings</a>. The following changes the given setting values when the context header matches:</p>
+<pre class="talon"><code>title: /my app/
+-
+settings():
+    some.setting = 123
+
+    another.setting = 432</code></pre>
+<p>You can also activate <a href="./Talon%20Framework/tags">tags</a>. This snippet activates the <code>user.my_tag</code> tag when the context header matches. This is used reasonably often to enable extra sets of voice commands for the given context.</p>
+<pre class="talon"><code>title: /my app/
+-
+tag(): user.my_tag</code></pre>
+<section id="keyboard-shortcuts-1" class="level4">
+<h4 class="anchored" data-anchor-id="keyboard-shortcuts-1">Keyboard Shortcuts</h4>
+<p>Another feature is the ability to bind keyboard shortcuts.</p>
+<pre class="talon"><code>title: /my app/
+-
+# Show notification saying the key was pressed and prevent other apps from receiving the key event
+key(f8): app.notify("f8 key pressed")
+
+# One or more modifiers can be used with the matcher
+key(ctrl-shift-alt-super-f8): app.notify("Lots of modifiers and the f8 key pressed. Note that alt is option on Mac. Use cmd modifier on Mac to use the apple key in a shortcut.")
+
+key(f9:passive): app.notify("f9 pressed, and we won't stop any other apps from receiving the key")
+key(f9:up): app.notify("show this balloon when the f9 key is released")</code></pre>
+<p>The list of available keys you can listen to isn’t well defined, but it is likely a subset of the names on the <a href="Talon%20Library%20Reference/key_action.md">key() action</a> wiki page.</p>
+<p>Aside from these, additional extra capabilities may be added from time to time. For example in the beta version you can currently define rules for matching facial expressions on OSX and user supplied noises (e.g.&nbsp;a whistle sound) via integration with parrot.py.</p>
+<p>================================================ FILE: docs/Customization/talon_lists.md ================================================</p>
+</section>
+</section>
+</section>
+</section>
+<section id="talon-list-files" class="level1">
+<h1><code>.talon-list</code> Files</h1>
+<p><code>.talon-list</code> files are a special type of <code>.talon</code> file. They are to solely to define lists of strings that can be used in voice commands or your Talon Python scripts. They can do exactly the same things as a Python Context with only a matches property and a single list on it. They are primarily intended for reducing verbosity and making list configuration easier for end users. If you are looking to configure settings it is better to use a <code>settings()</code> block in a <code>.talon</code> file as a settings block more clearly communicates that it is an internal setting and not part of a capture rule (like a <code>.talon-list</code> file would likely be).</p>
+<p>A <code>.talon-list</code> doesn’t require a <code>:</code> if the key is the same as the value. The right hand side of the key value pair is a string with or without quotes. It uses the same parser as <code>.talon</code> files and the syntax is a strict subset of the <code>.talon</code> file syntax, except for the ability to skip the colon and just have a word by itself. You can use tags and scopes in <code>.talon-list</code> files just like normal <code>.talon</code> files. In the context header, you should declare the name by which the list will be referred to in voice commands or Python by typing <code>list:</code> followed by the name within the <code>user</code> namespace. Everything declared in a particular <code>.talon-list</code> ends up in a single list.</p>
+<p>The following example shows a <code>.talon-list</code> file that defines a few special characters. Note how the string doesn’t need to be wrapped in quotations and can either be just itself or a mapping to a different string.</p>
+<pre class="talon"><code>list: user.key_special
+-
+enter
+tab
+delete
+page up:                    pageup
+page down:                  pagedown</code></pre>
+<p>We then need to initialize the list within a Talon module object. This is important for giving the list an associated comment. This is done within a Python file in our user directory. As one can see, it is a similar process to declaring a normal context list except for the fact that all the context matching is now done within the <code>.talon-list</code> file and we no longer need to do our context matching within Python.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>mod.<span class="bu">list</span>(<span class="st">"key_special"</span>, <span class="st">"The list of special keys we can input through voice commands"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We could then use this list in a <code>.talon</code> file like so:</p>
+<pre class="talon"><code>{user.key_special}:              key(key_special)</code></pre>
+<p>================================================ FILE: docs/Customization/Examples/canvas.md ================================================ # Display an Image on Screen</p>
+<p>You can use Talon’s built in canvas library to display an image or text, or draw arbitrary shapes on the screen.</p>
+<p>The code below creates a transparent canvas over the entire screen and paints a rectangle over it.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon.canvas <span class="im">import</span> Canvas</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon.types <span class="im">import</span> Rect</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> ui</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon.skia.canvas <span class="im">import</span> Canvas <span class="im">as</span> SkiaCanvas</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_draw(c: SkiaCanvas):</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    c.paint.color <span class="op">=</span> <span class="st">"FF0000"</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    c.paint.style <span class="op">=</span> c.paint.Style.FILL</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    c.draw_rect(Rect(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">100</span>))</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>screen: ui.Screen <span class="op">=</span> ui.main_screen()</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a canvas object that you can draw or add text to</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>canvas <span class="op">=</span> Canvas.from_screen(screen)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>canvas.draggable <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>canvas.blocks_mouse <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>canvas.focused <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>canvas.cursor_visible <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a callback to specify how the canvas should be drawn</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>canvas.register(<span class="st">"draw"</span>, on_draw)</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Freeze the canvas so it doesn't repeatedly refresh</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>canvas.freeze()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>================================================ FILE: docs/Customization/Examples/push_to_talk.md ================================================ # Listen Only While a Key is Pressed</p>
+<p>The example below activates push-to-talk when the f9 key is pressed. You can switch f9 for the key of your choice, but make sure that it does not conflict with your other hotkeys.</p>
+<pre class="talon"><code>key(f9:down):
+    speech.enable()
+
+key(f9:up):
+    speech.disable()</code></pre>
+<p>To toggle Talon on one key press, instead of holding it down:</p>
+<pre class="talon"><code>key(f9):
+    speech.toggle()
+</code></pre>
+<p>================================================ FILE: docs/Customization/Examples/simple.md ================================================ # Link Talon and Python</p>
+<section id="talon" class="level2">
+<h2 class="anchored" data-anchor-id="talon">Talon</h2>
+<pre class="talon"><code>insert the date:
+    result = user.my_custom_date_function()
+    insert(result)</code></pre>
+</section>
+<section id="python" class="level2">
+<h2 class="anchored" data-anchor-id="python">Python</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="at">@mod.action_class</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Actions:</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> my_custom_date_function():</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""My custom date function"""</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> time.strftime(<span class="st">"%Y-%m-</span><span class="sc">%d</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>================================================ FILE: docs/Customization/Examples/toggle_listening.md ================================================ # Toggle listening</p>
+<p>If you want to completely prevent Talon from listening, so not even the wake up commands are active, you can do that by changing the microphone to <code>"None"</code>:</p>
+<p>You can see available microphone names in the “Microphone” submenu in the Talon menu; or issue the voice command <code>"microphone show"</code>.</p>
+<pre class="talon"><code>key(f9):
+    sound.set_microphone("None")
+
+key(f10):
+    sound.set_microphone("System Default")</code></pre>
+<p>================================================ FILE: docs/Customization/Examples/turn_off_listening.md ================================================ # Turn off listening on start up</p>
+<p>To put Talon in sleep mode when you start the app (and typically your computer), create a python file in your user directory (e.g.&nbsp;<code>sleep.py</code>) and put in the following contents:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> app, actions</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> disable():</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    actions.speech.disable()</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>app.register(<span class="st">"ready"</span>, disable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>================================================ FILE: docs/Customization/Talon Framework/<em>category</em>.yml ================================================ position: 6 # float position is supported</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/actions.md ================================================ # Actions</p>
+<p>An action is a specially registered Python function that can be called by Talon voice commands. The code in <code>.talon</code> files ends up using built in or user defined actions for all its behavior. Consider this example:</p>
+<pre class="talon"><code>my command:
+    text = "hello"
+    mangled_text = user.mangle(text)
+    insert(mangled_text)
+    edit.save()</code></pre>
+<p>In this case the <code>my command</code> voice command calls three actions: <code>user.mangle</code>, <code>insert</code>, and <code>edit.save()</code>. A few actions like <code>insert</code> are defined and implemented by Talon. Other actions, like <code>edit.save</code>, are defined by Talon but not implemented (more on this later). You can also define your own custom actions like <code>user.mangle</code>. Note that you can’t just call arbitrary Python functions from <code>.talon</code> files, they need to be defined as actions first. This can be done as follows:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="at">@mod.action_class</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Actions:</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> find_reverse(): <span class="st">"Begins a reverse search."</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mangle(s: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Mangles the input string in the appropriate manner."</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"__"</span> <span class="op">+</span> s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This declares the actions <code>user.find_reverse</code> and <code>user.mangle</code> (all user-defined actions are prefixed with <code>user.</code>). It also gives a default implementation for <code>user.mangle</code> that simply prepends <code>__</code> to the input. As in this example, all actions must come with a docstring and type annotations for their arguments and return value.</p>
+<p>We are also able to override the implementation of actions depending on the context in which they are used. This is useful when the same operation has different keybindings in different applications. For example, the built-in Talon action <code>edit.save</code> is intended to perform the “save file” operation. In most applications this is performed via <code>ctrl-s</code>, but in Emacs it’s <code>ctrl-x ctrl-s</code>. Let’s say we want to override the edit.save action to make it work properly in Emacs and also wanted to implement/override the two actions we declared above. This shows how you can do that:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Context, actions</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a context that applies when we have an Emacs window focussed</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>ctx.matches <span class="op">=</span> <span class="st">"app: Emacs"</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Override a single action within the given Context.</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Note we don't have to specify type annotations or a docblock when</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># overriding actions since those are inherited from the definition.</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="at">@ctx.action</span>(<span class="st">"edit.save"</span>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> emacs_save():</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    actions.key(<span class="st">"ctrl-x ctrl-s"</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Override multiple "user." actions within the given context. The names of the class functions correspond to the actions we're overriding.</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="at">@ctx.action_class</span>(<span class="st">"user"</span>)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyEmacsActions:</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> find_reverse():</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>        actions.key(<span class="st">"ctrl-r"</span>)</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mangle(s):</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> s <span class="op">==</span> <span class="st">"other string"</span>:</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"emacs__"</span> <span class="op">+</span> s</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># This will call the next most specific action implementation (in our case the</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># default one specified on the module). This lets you selectively override</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>            <span class="co"># existing behavior.</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> actions.<span class="bu">next</span>(s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So now when we use the <code>user.mangle("some string")</code> action in a <code>.talon</code> file or <code>actions.user.mangle("some string")</code> in a <code>.py</code> file then we’ll get <code>"__some string"</code> by default. However if our “app: Emacs” context matches and the argument is ‘other string’ then we’ll get <code>"emacs__other string"</code>.</p>
+<p>Actions are self-documenting. A list of all defined actions can be accessed via the Talon Console with <code>actions.list()</code>.</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/apps.md ================================================ # Apps</p>
+<p>Talon allows you to give a ‘well-known’ name to an app. This lets you decouple the app matcher logic from the places it is used.</p>
+<p>Register and identify the ‘fancyedit’ app via a Talon Module in Python - <strong><code>fancyedit.py</code>:</strong></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>mod.apps.fancyedit <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">os: mac</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="st">and app.bundle: com.example.fancyedit</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># you can specify the same app several times; this is the same as specifying several match statements that are OR'd together</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>mod.apps.fancyedit <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="st">os: windows</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="st">and app.exe: fancyed.exe</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add another possible matcher for fancyedit in a different file than the one the well-known name was defined in - <strong><code>fancyedit_custom.py</code>:</strong></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Context</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>ctx.matches <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">os: linux</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">app: Xfce4-terminal</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">title: /fancyed - tmux/</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>ctx.apps <span class="op">=</span> [<span class="st">'fancyedit'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use the well-known app - <strong><code>fancyedit.talon</code>:</strong></p>
+<pre class="talon"><code>app: fancyedit
+-
+my fancy editor command: key(ctrl-alt-shift-y)</code></pre>
+</section>
+<section id="non-explicit-app-header-matching" class="level2">
+<h2 class="anchored" data-anchor-id="non-explicit-app-header-matching">Non-Explicit App Header Matching</h2>
+<p>Explicitly defining an <code>app</code> match to a well-known name, as described above, is the prefered approach. With that said, it’s worth noting that talon will match against <code>app: ...</code> even if something hasn’t already been explicitly declared. Using the the Gnome <code>clocks</code> GUI application on Linux as an example, where no existing explicit <code>app</code> declared, talon debug window will show <code>app.app = org.gnome.clocks</code>. In this case, <code>app.app</code> matches what talon has in <code>app.name</code>. As such, you can add <code>app: org.gnome.clocks</code> in your talon file context header and it will match. This type of non-explicit matching should be avoided when contributing code to the community repo.</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/captures.md ================================================</p>
+</section>
+</section>
+<section id="captures" class="level1">
+<h1>Captures</h1>
+<p>Captures parse some user-spoken words and run arbitrary Python code to produce an associated result that can be used in voice commands. This is useful for defining reusable “chunks” of grammar that parse your speech in interesting ways. They are also a more extensible option than lists in your public Talon user file sets (see later in this section for more detail).</p>
+<p>An example is defining a grammar for playing computer games where a character moves around on a square grid using a d-pad type interface (up, down, up right etc.). We might like to be able say something like “move north east” or “attack west”. This could be implemented as follows:</p>
+<p><strong><code>directions.py</code></strong>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Dict</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module, actions</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="at">@mod.capture</span>(rule<span class="op">=</span><span class="st">"((north | south) [(east | west)] | east | west)"</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dpad_input(m) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, <span class="bu">bool</span>]:</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Matches on a basic compass direction to return which keys should</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">    be pressed.</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"up"</span>: <span class="st">"north"</span> <span class="kw">in</span> m,</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"down"</span>: <span class="st">"south"</span> <span class="kw">in</span> m,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"right"</span>: <span class="st">"east"</span> <span class="kw">in</span> m,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"left"</span>: <span class="st">"west"</span> <span class="kw">in</span> m</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="at">@mod.action_class</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GameActions:</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dpad_keydown(direction: Dict[<span class="bu">str</span>, <span class="bu">bool</span>]):</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Holds down the keys corresponding to the given direction"</span></span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Press all the indicated keys down, exploiting the fact</span></span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># that the key names in our dictionary match the arrow key</span></span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># names on the keyboard</span></span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, pressed <span class="kw">in</span> direction.items():</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> pressed:</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>                actions.key(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">:down"</span>)</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dpad_keyup(direction: Dict[<span class="bu">str</span>, <span class="bu">bool</span>]):</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Releases the keys corresponding to the given direction"</span></span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, pressed <span class="kw">in</span> direction.items():</span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> pressed:</span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>                actions.key(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">:up"</span>)</span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dpad_move(direction: Dict[<span class="bu">str</span>, <span class="bu">bool</span>]):</span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Moves the character in the given direction"</span></span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>        actions.user.dpad_keydown(direction)</span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>        actions.user.dpad_keyup(direction)</span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> dpad_attack(direction: Dict[<span class="bu">str</span>, <span class="bu">bool</span>]):</span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Makes the game character attack in the indicated direction"</span></span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>        actions.user.dpad_keydown(direction)</span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Assume space is a common 'perform attack' key</span></span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a>        actions.key(<span class="st">"space"</span>)</span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a>        actions.user.dpad_keyup(direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code first implements a new capture which matches on any of the compass directions, parses that and returns a data structure describing which directions were indicated. There is also a set of actions included which take this data structure and use it to press the appropriate keys.</p>
+<p><strong><code>game_one.talon</code></strong>:</p>
+<pre class="talon"><code>move &lt;user.dpad_input&gt;: user.dpad_move(user.dpad_input)
+attack &lt;user.dpad_input&gt;: user.dpad_attack(user.dpad_input)</code></pre>
+<p>The above .talon file uses the angle bracket syntax to indicate we want to use the named capture. With these files you could then say something like “move north east” and the up and right keys would be pressed and released, moving your character up and to the right.</p>
+<p>In this example we have only set up a simple capture. The ‘rule’ parameter in the <code>@mod.capture</code> annotation actually has the same capabilities as the rule component of a .talon file command. The type of the ‘m’ parameter passed to your capture method behaves similarly to the body in a .talon file. You can use syntax like <code>m.my_list_2</code> to access the second usage of <code>user.my_list</code> in your rule expression for example. The <code>m</code> parameter can also be accessed as an array of its subcomponents. This was done in the above example (using the <code>in</code> operator to search the array).</p>
+<section id="captures-vs-lists-in-voice-commands" class="level4">
+<h4 class="anchored" data-anchor-id="captures-vs-lists-in-voice-commands">Captures vs lists in voice commands</h4>
+<p>It was mentioned earlier that using captures in the voice commands of your public Talon user file sets is a better option than lists. To see why, consider the <code>&lt;user.symbol_key&gt;</code> capture from <a href="https://github.com/talonhub/community">Talon Community</a>. This capture is used in a voice command that lets you press a key by just saying its name (e.g.&nbsp;saying “.” produces “.”). A partial implementation of that capture is included below:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module, Context, actions, app</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>mod.<span class="bu">list</span>(<span class="st">"symbol_key"</span>, desc<span class="op">=</span><span class="st">"All symbols from the keyboard"</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>ctx.lists[<span class="st">"user.symbol_key"</span>] <span class="op">=</span> {</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"dot"</span>: <span class="st">"."</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quote"</span>: <span class="st">"'"</span>,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"paren"</span>: <span class="st">"("</span>,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... 100 other key names</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="at">@mod.capture</span>(rule<span class="op">=</span><span class="st">"</span><span class="sc">{user.symbol_key}</span><span class="st">"</span>)</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> symbol_key(m) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"One symbol key"</span></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> m.symbol_key</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This capture is doing nothing but wrap the symbol_key list, so why is this useful? The reason in this case is the end user might want to extend the list of available keys in all voice commands that are using this capture. If the commands used a list like <code>{user.symbol_key}: key(symbol_key)</code>, then to add an extra key they’d need to copy that 100 item list to their new context. Because a capture is used instead (<code>&lt;user.symbol_key&gt;: key(symbol_key)</code>) we can add to the voice command using a file like this:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module, Context</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>mod.<span class="bu">list</span>(<span class="st">"mystuff_symbol_key"</span>, desc<span class="op">=</span><span class="st">"extra symbol keys"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>ctx.matches <span class="op">=</span> <span class="st">"app: my_app"</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>ctx.lists[<span class="st">"user.mystuff_symbol_key"</span>] <span class="op">=</span> {</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"semi"</span>: <span class="st">";"</span>,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="at">@ctx.capture</span>(<span class="st">"user.symbol_key"</span>, rule<span class="op">=</span><span class="st">"</span><span class="sc">{user.symbol_key}</span><span class="st"> | </span><span class="sc">{user.mystuff_symbol_key}</span><span class="st">"</span>)</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> symbol_key(m):</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">str</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that all I needed to do was implement the capture with a new rule parameter to have the extra ‘semi’ option be available to the command in the context of <code>app: my_app</code>.</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/lists.md ================================================</p>
+</section>
+</section>
+<section id="lists" class="level1">
+<h1>Lists</h1>
+<p>A list associates sequences of spoken words with strings that can be used in voice commands. This is useful for commands that permit a choice from a list of options. For example, imagine you wanted to say “exception EXCEPTION” and have Talon type in a programming language appropriate exception class name. You could do that using a list as follows:</p>
+<p><strong><code>exceptions.py</code>:</strong></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module, Context</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>mod.<span class="bu">list</span>(<span class="st">"exception_class"</span>, desc<span class="op">=</span><span class="st">"Exception classes"</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>ctx_default <span class="op">=</span> Context()</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>ctx_default.lists[<span class="st">"user.exception_class"</span>] <span class="op">=</span> {</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"generic exception"</span>: <span class="st">"Exception"</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>ctx_python <span class="op">=</span> Context()</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co"># code.language is a Talon defined scope which can be set to indicate</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co"># the programming language you're currently editing</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>ctx_python.matches <span class="op">=</span> <span class="st">"code.language: python"</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>ctx_python.lists[<span class="st">"user.exception_class"</span>] <span class="op">=</span> {</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"runtime"</span>: <span class="st">"RuntimeError"</span>,</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"value"</span>: <span class="st">"ValueError"</span>,</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>ctx_java <span class="op">=</span> Context()</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>ctx_java.matches <span class="op">=</span> <span class="st">"code.language: java"</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>ctx_java.lists[<span class="st">"user.exception_class"</span>] <span class="op">=</span> {</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"null pointer"</span>: <span class="st">"NullPointerException"</span>,</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"illegal argument"</span>: <span class="st">"IllegalArgumentException"</span>,</span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This sets up a list which matches a list of standard exceptions for the target programming language. Note that we can have a different set of item keys in the list for different contexts. Note also that our list (like user defined actions) is prefixed with <code>user.</code> to identify it as custom code.</p>
+<p><strong><code>exceptions.talon</code>:</strong></p>
+<pre class="talon"><code>exception {user.exception_class}: insert(exception_class)</code></pre>
+<p>We make use of our list in the above .talon file by referring to it with the curly brace syntax.</p>
+<p>Given the above files, if we said “exception null pointer” when the “code.language: java” selector was active we’d get the string “NullPointerException” typed in. Saying “exception generic exception” would do nothing in this context, and nor would “exception value”.</p>
+<p>One other fact of interest is that there’s no merging of lists if multiple contexts match. This would mean that if the “code.language: java” selector was active, then our list would not contain the “generic exception” item (it would only have “null pointer” and “illegal argument”).</p>
+<p>Because list contents can only be replaced in their entirety, end users can have a harder time overriding the list if they want to add one or two more entries. They would need to copy paste the contents of the source list and then add their entries to the end. See the captures section below for a pattern you can use to make this use case easier.</p>
+<section id="advanced-list-features" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-list-features">Advanced List Features</h2>
+<section id="dynamic-lists" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-lists">Dynamic Lists</h3>
+<p>Dynamic lists are an advanced Talon feature that as of Talon 0.4 are currently <strong>beta-only</strong>. They are used for generating lists of items for voice commands at runtime. For example, you can use dynamic lists to create voice commands specific to the names of elements currently on the screen. Without dynamic lists you would otherwise have to poll and constantly update a normal Talon list. Dynamic lists can also return <a href="#selection-lists">selection lists</a> to dynamically match voice commands to substrings.</p>
+<p>If you do not need the list to be constructed during the voice command, you should use a regular Talon list instead.</p>
+<p>The following code creates a dynamic list such that if the user says <code>test hello</code> it will insert <code>world</code>. While this example is trivial, dynamic lists can call any function during the process of generating the list, and can thus be quite powerful.</p>
+<pre class="talon"><code>test {user.dynamic}: insert(dynamic)</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>mod.<span class="bu">list</span>(<span class="st">"dynamic"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This function is called generates the list whenever used in a voice command</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="at">@ctx.dynamic_list</span>(<span class="st">"user.dynamic"</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dynamic() <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span>]:</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Any function that returns a dictionary can be used here</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"hello"</span>: <span class="st">"world"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code above is equivalent to the following non-dynamic context list below.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ctx.lists[<span class="st">"user.dynamic"</span>] <span class="op">=</span> {<span class="st">"hello"</span>: <span class="st">"world"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="selection-lists" class="level3">
+<h3 class="anchored" data-anchor-id="selection-lists">Selection Lists</h3>
+<p>Selection lists are another feature that as of Talon 0.4 are currently <strong>beta-only</strong>. They are used for matching substrings instead of a key value mapping like a normal talon list. For instance:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>ctx.selections[<span class="st">"user.sample_selection"</span>] <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="st">the dog is brown and fast</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="talon"><code>test {user.sample_selection}: insert(sample_selection)</code></pre>
+<p>This code would allow you to say <code>test the</code>, <code>test the dog</code>, <code>test brown and fast</code>, or any other substring of the original text and have it insert <code>the</code>, <code>the dog</code>, or <code>brown and fast</code> respectively. If you did not match a substring, the command would not work.</p>
+<p>Selection lists can include multiple strings from which to select from. To use this feature, each line of should be separated by two newline characters (). For example:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>ctx.selections[<span class="st">"user.sample_selection"</span>] <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">the dog is brown and fast</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="st">the cat is black and slow</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That would match on phrases from both lines, such as <code>brown and fast</code> or <code>cat is black</code>, among other substrings. (However, it would not match on phrases like <code>fast the cat</code> that span multiple separate lines.) Since the selection returns what was said and not the original text, you should search the original text to find which line was matched, if you need this info.</p>
+<p>Selection lists pair well with dynamic lists. To return a selection list instead of a dynamic list, simply return the multiline string instead of the dictionary mapping, and change the function signature to return a <code>str</code> instead of a <code>dict[str,str]</code>. As an example, you could use a dynamic list to dynamically construct a list of all the elements on the screen, using a selection list to match on any substring of the element you want to interact with. (i.e.&nbsp;if the element names are too verbose or contain special characters that are hard to say).</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/modes.md ================================================ # Modes</p>
+<p>Modes are property you can match in your <code>.talon</code> file context header. They are intended for switching on and off large sets of Talon functionality. For example Talon includes the ‘command’, ‘dictation’, and ‘sleep’ modes by default along with a few others. Multiple modes can be active at once.</p>
+<p>The built in ‘command’ mode is special in that it is an implicit requirement in all <code>.talon</code> files that haven’t explicitly specified a mode. So this <code>.talon</code> file would be active in command mode:</p>
+<pre class="talon"><code>-
+insert test: "command mode active"</code></pre>
+<p>Whereas this one would only be active in dictation mode:</p>
+<pre class="talon"><code>mode: dictation
+-
+insert mode: "dictation mode active"</code></pre>
+<p>You can create custom modes but this is uncommon as <a href="tags">tags</a> are better suited for most purposes. Like tags, multiple modes can be active at once. Unlike Tags, modes cannot be scoped to a particular context; modes always apply globally. The intent is that there should be a small enough number of them that they could be toggled using a short popup menu.</p>
+<p>So why might you add a custom mode? The main reason is because you want to disable all normal voice commands so only the ones in your mode are active. An example might be where you were using a full screen computer game, and wanted to eliminate potential conflicts with commands outside the game context.</p>
+<p>First you would declare the new mode in Python:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>mod.mode(<span class="st">"single_application"</span>, desc<span class="op">=</span><span class="st">"Non-multitasking mode (e.g. computer games)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then you might make a couple of generic ‘mode entry’ and ‘mode exit’ commands:</p>
+<pre class="talon"><code>^single application mode$:
+    mode.enable("user.single_application")
+    mode.disable("command")</code></pre>
+<pre class="talon"><code>mode: user.single_application
+-
+^command mode$:
+    mode.disable("user.single_application")
+    mode.enable("command")</code></pre>
+<p>Note that I’ve shadowed the existing <code>command mode</code> command from <a href="https://github.com/talonhub/community">Talon Community</a> so that it does the right thing when our mode is active.</p>
+<p>After that we could define a set of commands which would be available in our game:</p>
+<pre class="talon"><code>mode: user.single_application
+title: /My Game/
+-
+attack: key(enter)</code></pre>
+<p>================================================ FILE: docs/Customization/Talon Framework/modules_and_contexts.md ================================================</p>
+</section>
+</section>
+</section>
+<section id="modules-and-contexts" class="level1">
+<h1>Modules and Contexts</h1>
+<section id="modules" class="level2">
+<h2 class="anchored" data-anchor-id="modules">Modules</h2>
+<p>A Module is a place for giving things names. In particular, it can declare <a href="actions.md">actions</a>, <a href="lists.md">lists and captures</a>, <a href="scopes.md">scopes</a>, <a href="./tags.md">tags</a>, <a href="modes.md">modes</a>, <a href="settings.md">settings</a> and <a href="apps.md">applications</a>. In Python, you can construct a module like so:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All Actions, Lists etc. must first be declared via a Module before they can be referenced in <code>.talon</code> or <code>.py</code> files. See the concept sections linked above for how to do this in each case.</p>
+</section>
+<section id="contexts" class="level2">
+<h2 class="anchored" data-anchor-id="contexts">Contexts</h2>
+<p>A <em>context</em> specifies conditions under which to add new behavior or override existing behavior. A context can check for several properties like your OS, the name of the current application, etc. Within a particular context you can implement/override the behavior of <a href="./actions.md">actions</a>, adjust <a href="./settings.md">settings</a>, activate <a href="./tags.md">tags</a>, redefine <a href="./apps.md">apps</a>, redefine <a href="./lists.md">lists</a>, and alter <a href="./captures.md">captures</a>. Note that you cannot define new voice commands in Python, that can only be done in <code>.talon</code> files.</p>
+<p>In Python, you can construct a context like so:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Context</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When initially constructed, a context has no conditions attached, and so it is always active. You can make this context conditional by setting the <code>matches</code> property:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>ctx.matches <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="st">app: notepad_app</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="st">os: windows</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Multiple contexts can be active at any one time, we might have the one mentioned above as well as one with <code>ctx.matches = "os: windows"</code>. Since contexts can override behavior, Talon has a set of heuristics to work out which context should ‘win’ in the event that two or more override the same behavior. A useful approximation of these heuristics is that contexts with more matching rules will win. This concept can be used to make sure your overrides are used in preference to those implemented elsewhere (e.g.&nbsp;in <a href="https://github.com/talonhub/community">Talon Community</a>). For example if we wanted a more specific matcher than the one above we might add in a <code>language: en</code> requirement:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Context</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>more_specific_ctx <span class="op">=</span> Context()</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>more_specific_ctx.matches <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="st">app: notepad_app</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="st">os: windows</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="st">language: en</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>See examples in the <a href="actions.md">Actions</a>, <a href="./lists.md">lists</a>, and <a href="./tags.md">Tags</a> sections for information about using Contexts with those features.</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/scopes.md ================================================ # Scopes</p>
+<p>Scopes allow you to supply additional properties that can be matched in the header of <code>.talon</code> files or by the <code>Context.matches</code> string in Python. This could be used to make the window title from your current virtual machine window available to Talon for example. Another might be to tell Talon which mode your full-screen computer game is in. In practise they are not used very often.</p>
+<p>You need to write custom Python code to keep your scope information up to date. The following example implements a scope that makes the current time available as a matcher property.</p>
+<p><code>test.py</code></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module, cron</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="at">@mod.scope</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_scope_updater():</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sets the user.current_time scope to something like "04:12 PM"</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"current_time"</span>: datetime.datetime.now().strftime(<span class="st">"%I:%M %p"</span>)}</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-run the above code every minute to update the scope. You can run</span></span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;scope function&gt;.update() from anywhere you like to trigger an update.</span></span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>cron.interval(<span class="st">"1m"</span>, my_scope_updater.update)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>test.talon</code></p>
+<pre class="talon"><code># This matcher can either be a plain string or a regex
+user.current_time: /AM$/
+-
+is it morning: "yes it is!"</code></pre>
+<p><code>scopes</code> are ‘global’ in the sense that you can’t override them for particular contexts in the same way as actions. Any file can simply overwrite a particular scope’s value by implementing some python code like the above.</p>
+<p>You may have noticed that scopes can emulate the behaviour of <a href="tags">tags</a>, except you have to manage any context switches yourself. In practise tags are used far more often than scopes as they’re both simpler to use, and are also self documenting. This leads to the recommendation that if you are able to use a tag for your use-case, then generally you would do that. If you need the string matching behaviour of scopes then you might consider those.</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/settings.md ================================================ # Settings</p>
+<p>Settings allow you to control some of the parameters of your python files by changing their value in a .talon file. This can be used to make a Talon user file set easier to customize for end users, such as exposing the background color of a UI element. It can also be useful to have certain settings change when the context changes, by setting them to different values in different .talon files.</p>
+<p>Settings are defined on Modules. Each setting has a name, type, default value, and description. The following example shows how to define a setting in python and get its contextually dependent value.</p>
+<p><code>setting.py</code></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module, settings</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>mod.setting(</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"my_user_file_set_horizontal_position"</span>,</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>,</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>    default<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>    desc<span class="op">=</span><span class="st">"Set the horizontal display position of some UI element"</span>,</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>value <span class="op">=</span> settings.get(<span class="st">"user.my_user_file_set_horizontal_position"</span>)</span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The current value of the setting is "</span> <span class="op">+</span> value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that the name of the setting (the first argument to mod.setting) in the example included the prefix “my_user_file_set”. All user defined settings names share the same namespace so it’s important to avoid overly generic setting names that may conflict.</p>
+<p>The following example shows how you would change the value for that setting in a .talon file. Any number of settings can be defined in a single settings block, but any invalid syntax will prevent the entire block from applying.</p>
+<p><code>setting.talon</code></p>
+<pre class="talon"><code>-
+settings():
+    user.my_user_file_set_horizontal_position = 50
+    # Any number of other settings could be defined here</code></pre>
+<p>You can also set the value of a setting from Python:</p>
+<p><code>myfile.py</code></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Context</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>ctx.settings[<span class="st">"user.my_user_file_set_horizontal_position"</span>] <span class="op">=</span> <span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is also possible to register a callback function to be called whenever a setting changes. This is done by calling settings.register() with a setting name and a function to call. If the name string is blank (like in the example below) then the callback function will be called whenever any setting is changed. When the name is not blank the function will only be called when a setting with a matching name is changed.</p>
+<p><code>listener.py</code></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> settings_change_handler(<span class="op">*</span>args):</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"A setting has changed"</span>)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>settings.register(<span class="st">""</span>, settings_change_handler)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>================================================ FILE: docs/Customization/Talon Framework/tags.md ================================================ # Tags</p>
+<p>Besides concrete features like an application’s name or a window’s title, a context can also select for <em>tags</em>. Tags have a couple of main uses:</p>
+<ol type="1">
+<li>Tags can be used to activate additional voice commands within a particular context. For example <a href="https://github.com/talonhub/community">Talon Community</a> has some tab management commands (e.g.&nbsp;tab new) that apply to many applications. Application specific contexts or <code>.talon</code> files can simply enable the tag (and potentially implement the relevant actions) to activate those voice commands.</li>
+<li>Tags can be enabled from Python to activate a set of voice commands given certain conditions. For example the mouse grid activates a tag when it is visible. This tag enables the ‘grid off’ and ‘grid reset’ commands.</li>
+</ol>
+<p>To make a tag available, it must first be declared in a module:</p>
+<p><strong><code>generic_application_features.py</code>:</strong></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Module</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> Module()</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this declares a tag in the user namespace (i.e. 'user.tabs')</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>mod.tag(<span class="st">"tabs"</span>, desc<span class="op">=</span><span class="st">"basic commands for working with tabs within a window are available"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next let’s define a set of generic voice commands we think will apply to all applications with tabs:</p>
+<p><strong><code>tabs.talon</code>:</strong></p>
+<pre class="talon"><code># This selects for the tag 'user.tabs'.
+tag: user.tabs
+-
+(open | new) tab: app.tab_open()
+last tab: app.tab_previous()
+next tab: app.tab_next()
+close tab: app.tab_close()
+reopen tab: app.tab_reopen()</code></pre>
+<p>Finally, let’s activate these voice commands for the firefox application:</p>
+<p><strong><code>firefox.talon</code>:</strong></p>
+<pre class="talon"><code>app: Firefox
+-
+# This activates the tag 'user.tabs'.
+tag(): user.tabs</code></pre>
+<p>Of course, the commands we defined in <code>tabs.talon</code> just invoke corresponding <a href="actions">actions</a>, so unless the default behavior of those actions is what we want, we’d also need to <em>implement</em> them in a Python file (see <a href="actions">Actions</a>). Happily, in this case the default behavior suffices. Tags and actions often go together in this way.</p>
+<p>There’s also the option of enabling tags from within Python. To do that you can use a Context instance like this:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> Context</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> Context()</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>ctx.matches <span class="op">=</span> <span class="st">"app: Firefox"</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You can alter the set of tags whenever you like within your Python</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="co"># code. The tags will only be applied if your Context is currently active</span></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and they are included in the tags property. Note that you must replace the entire</span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set of tags at once, you can't individually add and delete them</span></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>ctx.tags <span class="op">=</span> [<span class="st">"user.tabs"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tags are a commonly used part of the Talon framework. Related but less commonly used are <a href="modes">modes</a> and <a href="scopes">scopes</a>.</p>
+<p>================================================ FILE: docs/Customization/Talon Framework/talon-framework-overview.md ================================================</p>
+</section>
+</section>
+<section id="overview-of-talon-framework" class="level1">
+<h1>Overview of Talon framework</h1>
+<p>Talon is an accessibility platform that provides a scripting layer to connect a range of input hardware/methods to a cross-platform API for interacting with desktop applications. Let’s start by talking about where your configuration/scripting files are stored.</p>
+<p>When setting up Talon to respond to voice commands, you should have installed a set of files in your Talon <code>user</code> directory (e.g.&nbsp;<code>~/.talon/user/</code> in Linux/MacOS). For example, the <a href="https://github.com/talonhub/community">Talon Community</a> user file set is the most common starting point. All of your Talon configuration/scripts go in this <code>user</code> directory and are formatted as either Talon (<code>.talon</code>) or Python (<code>.py</code>) files.</p>
+<p>Talon doesn’t care what names you give your <code>.py</code> or <code>.talon</code> files, or what folders you put them into; it will automatically try to load everything inside your <code>user</code> folder when it starts up. Any folders or file names you see in Talon user file sets (e.g.&nbsp;<a href="https://github.com/talonhub/community">Talon Community</a>) were chosen by the authors of that package. Talon also monitors files in the <code>user</code> directory, and will automatically reload them if they’re changed by printing a log message. This reloading is convenient when working on scripts/configuration as you generally don’t have to restart Talon for it to pick up changes.</p>
+<p>So why do we have two kinds of configuration/scripting files (<code>.py</code> and <code>.talon</code>)? Originally all Talon configuration/scripting was done using Python, but over time it was decided that the addition of a framework specific file type would be beneficial. To a first approximation <code>.talon</code> files provide a succinct way of mapping spoken commands to behaviour. <code>.py</code> files on the other hand provide the implementation of behaviour and other functionality used by .talon files.</p>
+</section>
+<section id="talon-concepts" class="level1">
+<h1>Talon Concepts</h1>
+<p>In order to script Talon it is useful to understand the abstractions it uses. Let’s start by giving you a brief overview of how they fit together.</p>
+<p>The first concept is the <a href="./modules_and_contexts.md">Module</a>. This is used to group behavior like settings, actions, or tags.</p>
+<p>The <a href="modules_and_contexts.md">Context</a> is a central feature of the Talon framework. A context is the circumstances under which a set of behaviour applies. For example we might only activate some voice commands when the title of the currently focussed window matches a given pattern. The concepts of <a href="tags.md">Tags</a> and <a href="apps.md">Apps</a>, and less commonly <a href="modes.md">Modes</a> and <a href="scopes.md">Scopes</a> are all ways of providing information to match against in a Context.</p>
+<p>The next key component is the implementation of behaviour via <a href="actions.md">Actions</a>. Two examples are moving the mouse cursor and pasting the contents of the clipboard. Talon comes with some built in actions, but most are defined and implemented in user scripts.</p>
+<p>One of the primary modes of input to Talon is through voice commands defined in <code>.talon</code> files. To implement commands containing dynamic ‘variables’ (e.g.&nbsp;‘allcaps some arbitrary words’) you can utilize <a href="lists.md">Lists and captures</a></p>
+<p>In addition to the above we also have the concept of <a href="settings.md">Settings</a>. Built-in and custom settings are used by actions to configure their behaviour (e.g.&nbsp;to change the delay between key presses in the <code>insert()</code> action).</p>
+<p>================================================ FILE: docs/Customization/Talon Library Reference/<em>category</em>.yml ================================================ position: 7 # float position is supported</p>
+<p>================================================ FILE: docs/Customization/Talon Library Reference/key_action.md ================================================ # key() action</p>
+<p>The Talon <code>key()</code> action allows you to press, hold, and release virtual keyboard keys. You can use it in <code>.talon</code> files directly, and most of the time don’t need to quote the argument. For example <code>key(ctrl-f)</code> is equivalent to <code>key("ctrl-f")</code> in .talon files. In Python you do need to quote the argument and can use the action like this:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talon <span class="im">import</span> actions</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>actions.key(<span class="st">"ctrl-f"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here’s some of the syntax you can use with the action:</p>
+<ul>
+<li><code>key("f")</code> - Presses the f key.</li>
+<li><code>key("ctrl-t")</code> - Presses and holds down the control key, then presses t, then releases everything.</li>
+<li><code>key("\\"")</code> - Presses the ” key.</li>
+<li><code>key("ctrl-shift-alt-super-t")</code> - Presses and holds down the control, shift, alt (aka option on mac), and super (windows key or cmd key on mac) keys, then presses t, then releases everything. Note how you can apply multiple modifiers by connecting them with hyphens.</li>
+<li><code>key("left delete")</code> - Presses the left arrow key, then the delete key.</li>
+<li><code>key("ctrl:down")</code> - Presses and holds the control key. You can use “ctrl:up” to release the key later in the same or a a subsequent key() call. You can use <code>:up</code> and <code>:down</code> with any key, not just modifiers like control.</li>
+<li><code>key("tab:3")</code> - Presses the tab key three times.</li>
+</ul>
+<p>Some key names are listed above, and some directly map to what is inserted (e.g.&nbsp;<code>key(1)</code> presses the number 1 key). Some key names are not obvious. A partial table of key names with descriptions follows.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 78%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Key name(s)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a z 0 9 - + ( ) etc.</td>
+<td>Presses the key corresponding to the symbol</td>
+</tr>
+<tr class="even">
+<td>left right up down</td>
+<td>Arrow keys</td>
+</tr>
+<tr class="odd">
+<td>backspace bksp</td>
+<td>The backspace key (delete character to left)</td>
+</tr>
+<tr class="even">
+<td>delete del</td>
+<td>The delete key (delete character to right)</td>
+</tr>
+<tr class="odd">
+<td>escape esc</td>
+<td>The escape key</td>
+</tr>
+<tr class="even">
+<td>pgup pageup pgdown pagedown</td>
+<td>The page up and page down keys</td>
+</tr>
+<tr class="odd">
+<td>return enter</td>
+<td>The enter key</td>
+</tr>
+<tr class="even">
+<td>tab space</td>
+<td>The tab and space keys</td>
+</tr>
+<tr class="odd">
+<td>home end</td>
+<td>The home and end keys</td>
+</tr>
+<tr class="even">
+<td>alt super ctrl shift</td>
+<td>Can be held down with e.g.&nbsp;<code>key("shift:down")</code> (and released with :up)</td>
+</tr>
+<tr class="odd">
+<td>ralt rctrl rshift</td>
+<td>The key on the right hand side of the keyboard</td>
+</tr>
+<tr class="even">
+<td>numlock capslock scroll_lock insert</td>
+<td>Persistent mode switch keys</td>
+</tr>
+<tr class="odd">
+<td>f1 f2 … f35</td>
+<td>The f1 to f35 keys, many of these are probably not on your keyboard, but are nonetheless available</td>
+</tr>
+<tr class="even">
+<td>mute voldown volup play stop play_pause prev next rewind fast_forward</td>
+<td>Media keys</td>
+</tr>
+<tr class="odd">
+<td>altgr</td>
+<td>Can be combined with another key to add accents, e.g.&nbsp;<code>key("altgr:down e altgr:up")</code> produces “é”. The dead_* keys might suit you better though.</td>
+</tr>
+<tr class="even">
+<td>menu help sysreq printscr compose</td>
+<td>Miscellaneous keys</td>
+</tr>
+<tr class="odd">
+<td>brightness_up brightness_down</td>
+<td>Screen brightness control</td>
+</tr>
+<tr class="even">
+<td>backlight_up backlight_down backlight_toggle</td>
+<td>Maybe keyboard backlight controls?</td>
+</tr>
+<tr class="odd">
+<td>keypad_0 keypad_1 … keypad_9</td>
+<td>The number keys on a keypad</td>
+</tr>
+<tr class="even">
+<td>keypad_clear keypad_enter keypad_separator keypad_decimal keypad_plus keypad_multiply keypad_divide keypad_minus keypad_equals</td>
+<td>Other keypad keys</td>
+</tr>
+<tr class="odd">
+<td>dead_grave dead_acute dead_circumflex dead_tilde dead_macron dead_breve dead_abovedot dead_diaeresis dead_cedilla</td>
+<td>Keys which causes the next key pressed to be accented. For example <code>key("dead_acute e")</code> produces “é”.</td>
+</tr>
+<tr class="even">
+<td>dead_perispomeni dead_abovering dead_doubleacute dead_caron dead_ogonek dead_voiced_sound dead_semivoiced_sound dead_belowdot dead_hook dead_horn dead_iota dead_stroke dead_abovecomma dead_psili dead_abovereversedcomma dead_dasia dead_doublegrave dead_belowring dead_belowmacron dead_belowcircumflex dead_belowtilde dead_belowbreve dead_belowdiaeresis dead_invertedbreve dead_belowcomma dead_currency dead_lowline dead_aboveverticalline dead_belowverticalline dead_longsolidusoverlay dead_a dead_e dead_i dead_o dead_u dead_small_schwa dead_capital_schwa dead_greek</td>
+<td>Other keys which accent the next key pressed</td>
+</tr>
+</tbody>
+</table>
+<p>================================================ FILE: docs/Help/beta_talon.md ================================================</p>
+</section>
+<section id="faq" class="level1">
+<h1>FAQ</h1>
+<section id="what-can-i-say" class="level3">
+<h3 class="anchored" data-anchor-id="what-can-i-say">What can I say?</h3>
+<p>Checkout the <a href="../Basic%20Usage/basic_usage">common commands</a> to get started using Talon.</p>
+</section>
+<section id="how-can-i-code-in-different-languages-with-talon" class="level3">
+<h3 class="anchored" data-anchor-id="how-can-i-code-in-different-languages-with-talon">How can I code in different languages with Talon</h3>
+<p>Talon does not require special configuration for different programming languages, but many users have per-language customizations to improve efficiency. Checkout the section on <a href="https://github.com/talonhub/community#programming-languages">Programming Languages</a> in the Community Talon user file set README for more information on how to use different language modes.</p>
+</section>
+<section id="what-hardware-should-i-have" class="level3">
+<h3 class="anchored" data-anchor-id="what-hardware-should-i-have">What hardware should I have?</h3>
+<p>Check out the <a href="../Resource%20Hub/Hardware/hardware.md">hardware</a> page for microphone and eye tracker recommendations.</p>
+</section>
+<section id="are-languages-other-than-english-supported" class="level3">
+<h3 class="anchored" data-anchor-id="are-languages-other-than-english-supported">Are languages other than English supported?</h3>
+<p>They’re being worked on, join <a href="https://talonvoice.com/chat">Talon Slack</a> and find a channel for your language to see how it’s going. If you are in the beta program, you can configure the WebSpeech API for dictation in other languages.</p>
+</section>
+<section id="how-can-i-make-talon-recognise-me-better" class="level3">
+<h3 class="anchored" data-anchor-id="how-can-i-make-talon-recognise-me-better">How can I make Talon recognise me better?</h3>
+<p>See the page <a href="../Resource%20Hub/Speech%20Recognition/improving_recognition_accuracy">Improving Recognition Accuracy</a>.</p>
+</section>
+<section id="how-can-i-contribute" class="level3">
+<h3 class="anchored" data-anchor-id="how-can-i-contribute">How can I contribute?</h3>
+<p>While Talon is closed source, there’s plenty you can do to help:</p>
+<ul>
+<li>https://speech.talonvoice.com/ Extend the voice data set used for speech recognition training.</li>
+<li>Publish your Talon commands on Github for others to share. Consider contributing back to the <a href="https://github.com/talonhub/community">Talon Community</a> user file set. Publicly shared file sets are <a href="https://search.talonvoice.com/search/">searchable using this search engine</a>.</li>
+<li>Report issues at https://github.com/talonvoice/talon/issues</li>
+<li>Add more to these docs :)</li>
+</ul>
+</section>
+<section id="troubleshooting" class="level3">
+<h3 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h3>
+<p>The <a href="../Resource%20Hub/Speech%20Recognition/troubleshooting">Troubleshooting</a> page includes solutions to common problems.</p>
+<p>================================================ FILE: docs/Help/talon-slack.md ================================================ # Talon Slack</p>
+<p>Talon has a Slack community for users to get help, ask questions, and meet one another. If you are starting to use Talon, join the <a href="https://talonvoice.com/chat">Talon Slack</a>. This is the most efficient way to get questions answered if they are not covered in this wiki. There are also a few general channels, like <code>#health</code>, for those looking for resources and other folks who might be navigating complex injuries like RSI (Repetitive Strain Injuries) from typing.</p>
+<p>A few notable channels:</p>
+<ul>
+<li><code>#help</code>: get help with Talon setup, usage, or ask questions about Talon</li>
+<li><code>#beta</code>: find beta download links and ask questions specific to the beta (this is a private channel that requires a <a href="https://www.patreon.com/join/lunixbochs">Patreon donation</a>)</li>
+<li><code>#health</code>: chat with others about computer health issues, share knowledge, find other folks who might be going through similar things</li>
+<li><code>#talon-docs</code>: chat about Talon documentation such as this wiki</li>
+<li><code>#hardware</code>: chat about hardware, e.g., microphones</li>
+</ul>
+<p>================================================ FILE: docs/Hidden Legacy Pages/<em>category</em>.yml ================================================ className: hidden</p>
+<p>================================================ FILE: docs/Integrations/accessibility.md ================================================</p>
+</section>
+</section>
+<section id="accessibility" class="level1">
+<h1>Accessibility</h1>
+<section id="non-visual-use" class="level2">
+<h2 class="anchored" data-anchor-id="non-visual-use">Non-Visual Use</h2>
+<p>Although Talon is not explicitly designed for non-visual use, it can still be used well alongside screen readers or other assistive technology.</p>
+<p>Please note that Talon is in rapid development and is largely community supported. If you have issues, please join the <a href="https://talonvoice.com/chat">community slack</a> and let someone know.</p>
+<section id="how-to-get-started" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-get-started">How to get started</h3>
+<ul>
+<li>Setup Talon as per normal:
+<ul>
+<li><a href="../Resource%20Hub/Talon%20Installation/installation_guide">Install Talon</a> and a speech recognition engine</li>
+<li>Install the <a href="https://github.com/talonhub/community">community user file set</a></li>
+</ul></li>
+<li>Once setup, install <a href="https://github.com/C-Loftus/sight-free-talon">sight-free-talon</a>. This repository provides text-to-speech integration for Talon. If you use a screen reader, this repo prevents Talon from interrupting the text-to-speech voice as it types characters during dictation.
+<ul>
+<li>See the documentation in that repo for specific setup instructions</li>
+</ul></li>
+</ul>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>Certain windows produced by Talon’s imgui library, like those from the <code>help scope</code> command are not accessible.</li>
+</ul>
+<p>================================================ FILE: docs/Integrations/essential-tools.md ================================================</p>
+</section>
+</section>
+</section>
+<section id="essential-talon-integrations" class="level1">
+<h1>Essential Talon Integrations</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Software</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://github.com/david-tejada/rango">Rango</a></td>
+<td>Click on links and control your browser all through voice; Similar to Vimium but purpose built for Talon-use with better UX</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.cursorless.org/">Cursorless</a></td>
+<td>Rapid voice coding and text editing by intelligently manipulating the parse tree of your code</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/wolfmanstout/talon-gaze-ocr">gaze-ocr</a></td>
+<td>Select any text and move the mouse using eye tracking and text recognition (OCR)</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/chaosparrot/parrot.py">Parrot</a></td>
+<td>Control Talon with noises and clicks (requires Talon beta)</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/c-loftus/talon-ai-tools">Talon-ai-tools</a></td>
+<td>Use LLMs to fix dictation errors, manipulate text, and speed up your workflow</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/phillco/talon-axkit">AXKit</a></td>
+<td>Enhance Talon with native OS accessibility integrations (macOS only)</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/chaosparrot/talon_hud">Talon-HUD</a></td>
+<td>Show visual information about your current state of Talon.</td>
+</tr>
+</tbody>
+</table>
+<p>================================================ FILE: docs/Integrations/other-integrations.md ================================================ # Other Useful Software</p>
+<section id="browser-navigation" class="level2">
+<h2 class="anchored" data-anchor-id="browser-navigation">Browser Navigation</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Software</th>
+<th>Cost</th>
+<th>Platform</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/">Vimium</a></td>
+<td>Free</td>
+<td>Firefox/Chrome</td>
+<td>Vim style browser controls. Lets you see all links on page and click with 2 letter combos.</td>
+</tr>
+<tr class="even">
+<td><a href="https://addons.mozilla.org/en-US/firefox/addon/tridactyl-vim/">Tridactyl</a></td>
+<td>Free</td>
+<td>Firefox/Chrome</td>
+<td>More vim style control in browser</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/televator-apps/vimari">Vimari</a></td>
+<td>Free</td>
+<td>Safari</td>
+<td>A port of Vimium for Safari.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="os-navigation-software" class="level2">
+<h2 class="anchored" data-anchor-id="os-navigation-software">OS Navigation Software</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Software</th>
+<th>Cost</th>
+<th>Platform</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://shortcatapp.com/">Shortcat</a></td>
+<td>Free</td>
+<td>Mac</td>
+<td>Allows selecting native UI elements by searching related strings. Like vimium for OSX.</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.homerow.app">Homerow</a></td>
+<td>Paid</td>
+<td>Mac</td>
+<td>Another Vimium for OSX alternative.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/rxhanson/Rectangle">Rectangle</a></td>
+<td>Free</td>
+<td>Mac</td>
+<td>Keyboard control window placement and management</td>
+</tr>
+<tr class="even">
+<td><a href="https://fluentsearch.net/">Fluent Search</a></td>
+<td>Free</td>
+<td>Windows</td>
+<td>General Windows productivity software that can put labels on each button etc. (in addition to acting as an application launcher). Highly customizable and feature rich.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/zsims/hunt-and-peck">Hunt and Peck</a></td>
+<td>Free</td>
+<td>Windows</td>
+<td>Like Vimium for Windows. Paints a two letter label on each button etc. which you can type to select. Note: May not work with some modern Windows GUI programs. Sporadically maintained</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="programming-and-text-editing" class="level2">
+<h2 class="anchored" data-anchor-id="programming-and-text-editing">Programming and text editing</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Software</th>
+<th>Cost</th>
+<th>Platform</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://community.devexpress.com/blogs/markmiller/archive/2023/06/21/jump-codes-in-coderush-for-visual-studio.aspx">Jump Codes in CodeRush for Visual Studio</a></td>
+<td>Free</td>
+<td>Windows</td>
+<td>Helps with navigation in Visual Studio. See <a href="https://www.youtube.com/watch?v=EVJOEQp9_cw">this video</a> for an example. Also <a href="https://www.youtube.com/watch?v=_awmO-WZ_vw&amp;list=PL8h4jt35t1wgawacCN9wmxq1EN36CNUGk&amp;index=23">drop/collect/swap marker</a> functionality which is useful for Voice Coding.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="troubleshooting-1" class="level1">
+<h1>Troubleshooting</h1>
+<section id="nothing-happens-when-i-speak" class="level2">
+<h2 class="anchored" data-anchor-id="nothing-happens-when-i-speak">Nothing Happens When I Speak</h2>
+<p>If you are testing your setup with one of the <a href="../../Basic%20Usage/basic_usage">basic commands</a> and getting no response at all, first check a few fundamentals to help focus the troubleshooting. There are a number of issues at different layers of the setup that could be causing the problem. Your first few steps should help narrow the focus.</p>
+<section id="check-your-microphone" class="level3">
+<h3 class="anchored" data-anchor-id="check-your-microphone">Check Your Microphone</h3>
+<p>Your microphone is critical to your setup. If your microphone isn’t working, then none of your voice commands will either. Testing this piece early may save you some time and help narrow down your troubleshooting to either hardware (microphone, audio interface, cables, etc) or software (Talon, Talon configuration, speech engine, etc).</p>
+<p>Check that your computer is using the correct microphone and receiving sound input.</p>
+<details>
+<summary role="button">
+Mac
+</summary>
+<p>
+Open System Preferences &gt; Sound &gt; Input. Check that the correct input device is selected and speak into the microphone. Watch the Input level as you speak; you should see the level rising and falling.
+</p>
+<img src="/img/sound_input_mac.gif" alt="gif of sound input window in system preferences on a Mac with input level moving">
+</details>
+<details>
+<summary role="button">
+Windows
+</summary>
+<p>
+Select Start &gt; Settings &gt; System &gt; Sound. In Sound settings, go to Input &gt; Test your microphone. Verify that the correct input device is selected and speak into the microphone. Look for a blue bar that should rise and fall as you speak.
+</p>
+</details>
+<p>If you are not receiving any sound input, check your ancillary microphone equipment (cables, interfaces, preamps, etc.).</p>
+<ul>
+<li>Check your cables and connections.</li>
+<li>Check your adapters and/or audio interfaces if you are using them. Examples: Shure X2U XLR-to-USB signal adapter or the DPA d:vice mobile audio interface. Check that they are connected properly and check any settings on the device, e.g., volume, gain, etc.</li>
+<li>Ensure your microphone is not muted.</li>
+<li>Ensure that the microphone is pointed at the mouth. This points the axis of maximum sensitivity toward your mouth for best voice isolation (reducing background noise). Some microphones require more careful placement than others.</li>
+<li>Place the microphone at a consistent distance away from your mouth. For headset microphones, most speech recognition documentation recommends that you place the boom of the microphone approximately one inch from your face, pointed at a side corner of your mouth. For table microphones, somewhere between six and twelve inches works best (unlike a radio moderator, you do not need to eat the mic). A proper placement eliminates wind noises from breathing and loud sounds.</li>
+</ul>
+</section>
+<section id="check-that-talon-is-running" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-talon-is-running">Check that Talon is Running</h3>
+<p>After you have started the Talon application, look for the Talon icon in the menubar.</p>
+<details>
+<summary role="button">
+Mac
+</summary>
+<p>
+Talon’s icon should show up in the menu bar in the upper right corner of your screen:
+</p>
+<img src="/img/talon_menubar_awake.png" alt="screenshot of the desktop on a mac showint the Talon icon in the top right menubar">
+</details>
+</section>
+<section id="check-that-talon-is-awake" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-talon-is-awake">Check that Talon is Awake</h3>
+<p>When Talon is running, it will be in one of a few different <a href="../../Basic%20Usage/basic_usage">modes</a>. One of these modes is a <code>sleep</code> mode, which will put Talon in a dormant state where it is listening but not responding to commands. While asleep, Talon will only respond to a minimal set of commands, such as <code>talon wake</code>, which will put Talon out of sleep and enable Talon to respond to commands.</p>
+<p>If you are trying to use Talon commands and Talon is not responding, make sure Talon is not in sleep mode. The Talon icon in the menubar provides some visual cue as to what mode Talon is in:</p>
+<details>
+<summary role="button">
+Mac
+</summary>
+<img src="/img/talon_menubar_awake.png" alt="screenshot of the desktop on a mac showint the Talon icon in the top right menubar"> <img src="/img/talon_menubar_asleep.png" alt="screenshot of the desktop on a mac showint the Talon icon in the top right menubar">
+</details>
+<p><strong>Note:</strong> Depending on your version of Talon, this icon may use color to indicate awake/asleep (green=awake, red=asleep) instead of the slash as pictured above. The slash is used in newer versions.</p>
+<p>You can also check the mode by clicking the icon and looking for which mode is set under <code>Speech Recognition</code>.</p>
+</section>
+<section id="check-that-talon-is-using-the-correct-microphone" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-talon-is-using-the-correct-microphone">Check that Talon is using the Correct Microphone</h3>
+<p>You can check that Talon is using the correct microphone by clicking the Talon icon in the menu bar.</p>
+<details>
+<summary role="button">
+Mac
+</summary>
+<p>
+Talon’s icon should show up in the menu bar in the upper right corner of your screen:
+</p>
+<img src="/img/talon_menu_microphone.png" alt="screenshot of the desktop on a mac showing the Talon microphone menu">
+</details>
+<p>You can also check which which microphone is selected by looking in the Talon logs, which are located in <code>~/.talon/talon.log</code>. Look for a log that looks like this:</p>
+<p><code>2020-03-04 15:27:53  INFO Activating Microphone: "Yeti Nano Analogue Stereo"</code></p>
+<p>If it’s the wrong one, use the menu in the app tray to change it.</p>
+</section>
+</section>
+<section id="talon-seems-to-do-the-wrong-thing" class="level2">
+<h2 class="anchored" data-anchor-id="talon-seems-to-do-the-wrong-thing">Talon seems to do the wrong thing</h2>
+<section id="check-the-quality-of-the-sound-input" class="level3">
+<h3 class="anchored" data-anchor-id="check-the-quality-of-the-sound-input">Check the Quality of the Sound Input</h3>
+<p>If your computer is receiving sound input, that doesn’t necessarily mean the sound is of good quality. To confirm the sound quality, make a recording of yourself saying Talon commands and play it back. There should be no distortion of the sound and it should be at an optimum volume (not too loud, not too quiet). If you hear any distortion or the volume seems too low or high, check the microphone <a href="troubleshooting#check-the-gain">gain</a>.</p>
+</section>
+<section id="check-the-gain" class="level3">
+<h3 class="anchored" data-anchor-id="check-the-gain">Check the Gain</h3>
+<p>If you are new to using microphone equipment and are not familiar with microphone gain, check out this podcasting blog <a href="https://podcastarticles.com/what-is-microphone-gain/">What is microphone gain?</a>. In simple terms, gain is the <em>input</em> volume of your audio. If the gain is too low, the audio will sound very quiet and Talon may cut you off or hear you at all. If the gain is too high, then sound may get distorted by <a href="https://youtu.be/8Px0UReBI60">clipping</a> and Talon may not understand your commands.</p>
+<p>One way to test your gain settings is to make an audio recording and listen to how it sounds. The sound should not be overly quiet nor should it sound like you are shouting. Listen for clipping distortions and reduce the gain until there are no distortions.</p>
+<p>One tool to make a recording is <a href="https://www.audacityteam.org">Audacity</a>, a free and open-source audio editor and recorder that supports Windows, macOS, GNU/Linux. To make a recording with Audacity:</p>
+<ol type="1">
+<li>Install and start <em>Audacity</em>,</li>
+<li>set the correct microphone, and</li>
+<li>press <em>Record</em>, utter an upbeat “Hello there!”, and stop the recording.</li>
+<li>Listen to the playback: Your voice should sound clear. If it’s too low, increase the gain, if it’s distorted, reduce it.</li>
+</ol>
+<p>Some audio recording software may also provide visual feedback about whether your gain is at the right level. Look for waveforms that react to your voice. The waveforms should be as big as possible without maxing out.</p>
+<p>Each microphone and piece of ancillary microphone equipment (audio interface, preamp, audio adapter, etc.) will have a different personality. Because of that, trust your ears more than the dB reading or the graph of Audacity.</p>
+</section>
+<section id="check-that-talon-is-in-the-correct-mode" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-talon-is-in-the-correct-mode">Check that Talon is in the correct mode</h3>
+<p>Talon user file sets can be configured to have multiple modes, which will have a different set of functionality. Most commonly, like in the <a href="https://github.com/talonhub/community">Talon Community</a> user file set, there will be two modes: command mode and dictation mode. In command mode, your speech will be mapped to the commands you have configured in your user file set. In dictation mode, your speech will be typed out literally, which is useful if you want to dictate text, like in an email or document.</p>
+<ul>
+<li>Use dictation mode for free-form speech dictation, like writing an email. (Switch by saying “dictation mode”.)</li>
+<li>Use command mode for everything else, including dictating individual letters using the alphabet or writing code. (Switch by saying “command mode”.)</li>
+</ul>
+</section>
+<section id="check-your-speech-engine" class="level3">
+<h3 class="anchored" data-anchor-id="check-your-speech-engine">Check your Speech Engine</h3>
+<p>Check that your speech engine has been initialized by looking in the <a href="troubleshooting#check-the-talon-logs">talon log file</a> You should see a line that looks like this:</p>
+<pre><code>2020-03-04 15:28:05  INFO (SpeechSystem) Activating speech engine: W2lEngine(en_US)</code></pre>
+</section>
+<section id="check-your-talon-user-file-sets" class="level3">
+<h3 class="anchored" data-anchor-id="check-your-talon-user-file-sets">Check your Talon user file sets</h3>
+<p>Check you have some valid commands in <code>~/.talon/user</code>. If it’s empty, install the <a href="https://github.com/talonhub/community">Talon Community</a> user file set and test with some <a href="../../Basic%20Usage/basic_usage">basic commands</a>. Install the entire repository, not just individual files. This user file set can be combined with other Talon user file sets, though it is common that most of the functionality will be provided by <a href="https://github.com/talonhub/community">Talon Community</a>. Additional file sets are commonly used to customize the default behavior provided by <a href="https://github.com/talonhub/community">Talon Community</a> or add additional features not already included.</p>
+<p>Talon automatically tracks changes to files in <code>~/.talon/user</code>, so that one can change scripts on the fly. This breaks if <code>~/.talon</code> (or any other part of the path) is a symlink.</p>
+</section>
+<section id="check-out-tips-for-improving-accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="check-out-tips-for-improving-accuracy">Check out Tips for Improving Accuracy</h3>
+<p>If commands are intermittently working, check out these tips for <a href="improving_recognition_accuracy">improving accuracy</a>.</p>
+</section>
+<section id="check-the-talon-logs" class="level3">
+<h3 class="anchored" data-anchor-id="check-the-talon-logs">Check the Talon Logs</h3>
+<p>Talon emits debug information to a log file in your Talon home directory, Windows: <code>%APPDATA%\Talon</code> Mac: <code>~/.talon</code>. Look for a file with the <code>.log</code> extension, probably named <code>talon.log</code>. The logs will contain useful debug information, like the Talon version or which microphone Talon is using. Syntax errors will also show up in these logs, which make them useful for debugging your Talon user file sets.</p>
+<pre><code>2021-04-10 17:56:28  INFO Activating Microphone: "d:vice MMA-A"
+2021-04-10 15:19:58 DEBUG Talon Version: 0.1.5</code></pre>
+</section>
+</section>
+<section id="talon-crashes-during-use" class="level2">
+<h2 class="anchored" data-anchor-id="talon-crashes-during-use">Talon Crashes During Use</h2>
+<p>Talon should recover from most errors itself, but if it crashes please report it in the Talon Slack with the output log.</p>
+<p>================================================ FILE: docs/Resource Hub/Talon Installation/downloading-community.md ================================================ # Welcome to the Talon Community Wiki!</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

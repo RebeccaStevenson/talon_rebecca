@@ -1,0 +1,280 @@
+---
+alwaysApply: true
+---
+
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here. 
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).
+# Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc.
+-   `custom/`: User-specific customizations. New files should be created here unless they are intended for the public community.
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `plugin/`: Talon plugins that add new features to Talon itself.
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+-   `test/`: Contains tests for the scripts.
+-   `utils/`: Utility functions used by other scripts.
+
+Each module (e.g., an app in `apps/` or a language in `lang/`) often consists of:
+-   A `.py` file for Python logic (defining actions, captures, lists).
+-   A `.talon` file for defining voice commands.
+-   Platform-specific files (e.g., `_mac.py`, `_win.talon`).

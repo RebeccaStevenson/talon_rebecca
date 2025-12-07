@@ -1,0 +1,71 @@
+# Talon Voice Development Guide
+
+This guide provides an overview of how to work with [Talon](https://talonvoice.com/docs/) in this community repository. Talon uses `.talon` files for voice commands and Python (`.py`) files for more complex logic.
+
+The user's scripts are located in `~/.talon/user`. The current workspace is the `community` repository, a collection of shared Talon scripts.
+
+## Project Structure
+
+This is a Talon community repository. The structure is as follows:
+
+-   `apps/`: Application-specific commands (e.g., Chrome, VSCode).
+-   `core/`: Core functionalities like editing text, managing windows, etc. This is a good place to look for existing actions.
+-   `custom/`: **All new, user-specific scripts and commands should be created in this directory.**
+-   `lang/`: Language-specific commands (e.g., Python, JavaScript).
+-   `tags/`: Defines tags that can be used to enable/disable sets of commands.
+
+Each module often consists of:
+-   A `.py` file for Python logic (defining actions).
+-   A `.talon` file for defining voice commands.
+
+## Adding New Commands
+
+1.  **Create a Python file in `custom/`:** Define a new action in a `.py` file (e.g., [`custom/html.py`](mdc:custom/html.py)).
+    ```python
+    from talon import Module, actions
+
+    mod = Module()
+
+    @mod.action_class
+    class Actions:
+        def my_new_action():
+            # implementation
+            pass
+    ```
+2.  **Create a Talon file in `custom/`:** Create a `.talon` file to define the voice command that triggers the action.
+    ```talon
+    # Set the context for when the command is active
+    app: vscode
+    -
+    # The voice command
+    my new command: user.my_new_action()
+    ```
+3.  **Define Context:** Use a `Context` object in your Python file to scope actions or tags to specific applications or situations.
+    ```python
+    from talon import Context, Module, actions
+
+    mod = Module()
+    mod.tag("html", desc="a tag for html commands")
+
+    ctx = Context()
+    # This context applies when inside vscode or cursor
+    ctx.matches = r"""
+    app: vscode
+    app: cursor
+    """
+    # And it enables the user.html tag
+    ctx.tags = ["user.html"]
+    ```
+
+## Debugging Tips
+
+### `KeyError: "Action '...' is not declared."`
+
+This is a common error that occurs when a `.talon` file calls an action that hasn't been defined in any `.py` file.
+
+-   **Check for typos:** Ensure the action name in your `.talon` file matches the definition in your `.py` file.
+-   **Look for existing actions:** Before creating a new action, search the `core/` directory. For example, instead of creating a new way to get selected text, we found `actions.edit.selected_text()` in [`core/edit/edit.py`](mdc:core/edit/edit.py).
+description:
+globs:
+f#alwaysApply: false
+---
