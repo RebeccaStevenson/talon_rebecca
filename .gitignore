@@ -10,3 +10,8 @@ settings/search_engines.csv
 
 # Personal notes
 misc/notes/notes/
+.git-backup-*
+
+# Personal excel scripts
+excel_habit.py
+excel_custom.py
