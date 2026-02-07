@@ -7,5 +7,5 @@ profile = 'black'
 [tool.pytest.ini_options]
 pythonpath = [
     ".",
-    "test/stubs",
+    "tests/stubs",
 ]
