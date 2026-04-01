@@ -16,7 +16,6 @@ from user.talon_rebecca.core.platform_utils import (
     quote_cli_arg,
 )
 
-_IS_MAC = app.platform == "mac"
 _POST_LAUNCH_DELAY = "500ms"
 
 
@@ -28,6 +27,10 @@ class EditorSpec:
     terminal_command: str
     unavailable_message: str
     focus_callback: Callable[[], None]
+
+
+def _is_mac() -> bool:
+    return app.platform == "mac"
 
 
 def _launch_windows_direct(spec: EditorSpec, target_path: str) -> bool:
@@ -52,7 +55,7 @@ def open_editor_workspace(
     """Open a file or directory in the requested editor."""
     target_path = expand_path(path)
 
-    if _IS_MAC:
+    if _is_mac():
         launched = open_path_in_macos_app(spec.macos_app_name, target_path)
     else:
         launched = _launch_windows_direct(spec, target_path)

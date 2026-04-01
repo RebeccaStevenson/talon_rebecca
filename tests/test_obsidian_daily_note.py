@@ -15,6 +15,9 @@ if "pytest" in sys.modules:
     def setup_function():
         actions.reset_test_actions()
         app.notifications.clear()
+        actions.register_test_action(
+            "user", "audio_set_system_output_shokz", lambda: None
+        )
 
     def test_daily_note_path_uses_configured_vault_dir(monkeypatch, tmp_path):
         config_path = tmp_path / "note_paths.json"
@@ -96,8 +99,8 @@ if "pytest" in sys.modules:
         )
         actions.register_test_action(
             "user",
-            "audio_output_set_preferred",
-            lambda device: audio_calls.append(device),
+            "audio_set_system_output_shokz",
+            lambda: audio_calls.append("Shokz Loop110"),
         )
         actions.register_test_action("user", "play_ding", lambda: ding_calls.append(1))
         actions.register_test_action(
@@ -126,6 +129,12 @@ if "pytest" in sys.modules:
         assert insert_calls == [expected_line]
         assert sleep_calls == ["2500ms", "300ms", "200ms", "100ms"]
 
+    def test_save_shortcut_uses_cmd_on_mac():
+        assert mod._save_shortcut("mac") == "cmd-s"
+
+    def test_save_shortcut_uses_ctrl_on_windows():
+        assert mod._save_shortcut("windows") == "ctrl-s"
+
     # -- daily_note_check logic -------------------------------------------
 
     def test_check_no_file_notifies_missing(monkeypatch, tmp_path):
@@ -133,7 +142,6 @@ if "pytest" in sys.modules:
         monkeypatch.setattr(mod, "_DAILY_DIR_OVERRIDE", tmp_path)
         cancel_calls = []
         actions.register_test_action("user", "play_cancel", lambda: cancel_calls.append(1))
-        actions.register_test_action("user", "audio_output_set_preferred", lambda d: None)
 
         actions.user.daily_note_check()
 
@@ -156,12 +164,30 @@ if "pytest" in sys.modules:
         ding_calls = []
         actions.register_test_action("user", "play_ding", lambda: ding_calls.append(1))
         actions.register_test_action("user", "play_cancel", lambda: None)
-        actions.register_test_action("user", "audio_output_set_preferred", lambda d: None)
 
         actions.user.daily_note_check()
 
         assert len(ding_calls) == 1
         assert any("Daily Note: OK" in n[0] for n in app.notifications)
+
+    def test_check_uses_ctrl_s_on_windows(monkeypatch, tmp_path, talon_platform):
+        monkeypatch.setattr(mod, "_DAILY_DIR_OVERRIDE", tmp_path)
+        talon_platform("windows")
+        path = domain.ensure_daily_note(tmp_path)
+        path.write_text(
+            "# 2026-03-23\n\n## 3:45 PM\n\nSome dictated notes here.\n",
+            encoding="utf-8",
+        )
+        os.utime(path, None)
+
+        key_calls = []
+        actions.register_test_action("", "key", lambda value: key_calls.append(value))
+        actions.register_test_action("user", "play_ding", lambda: None)
+        actions.register_test_action("user", "play_cancel", lambda: None)
+
+        actions.user.daily_note_check()
+
+        assert key_calls == ["ctrl-s"]
 
     def test_check_recent_without_content_warns(monkeypatch, tmp_path):
         """Recently modified file with NO content after timestamp should warn."""
@@ -174,7 +200,6 @@ if "pytest" in sys.modules:
         cancel_calls = []
         actions.register_test_action("user", "play_ding", lambda: None)
         actions.register_test_action("user", "play_cancel", lambda: cancel_calls.append(1))
-        actions.register_test_action("user", "audio_output_set_preferred", lambda d: None)
 
         actions.user.daily_note_check()
 
@@ -197,7 +222,6 @@ if "pytest" in sys.modules:
         cancel_calls = []
         actions.register_test_action("user", "play_ding", lambda: None)
         actions.register_test_action("user", "play_cancel", lambda: cancel_calls.append(1))
-        actions.register_test_action("user", "audio_output_set_preferred", lambda d: None)
 
         actions.user.daily_note_check()
 
@@ -218,7 +242,6 @@ if "pytest" in sys.modules:
         cancel_calls = []
         actions.register_test_action("user", "play_ding", lambda: None)
         actions.register_test_action("user", "play_cancel", lambda: cancel_calls.append(1))
-        actions.register_test_action("user", "audio_output_set_preferred", lambda d: None)
 
         actions.user.daily_note_check()
 

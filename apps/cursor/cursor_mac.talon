@@ -1,3 +1,4 @@
+os: mac
 app: cursor
 -
 # Chat Commands

@@ -17,8 +17,8 @@ if "pytest" in sys.modules:
         monkeypatch.setattr(editor_launch, "expand_path", lambda path: "/tmp/project")
         monkeypatch.setattr(
             editor_launch,
-            "_IS_MAC",
-            True,
+            "_is_mac",
+            lambda: True,
         )
         monkeypatch.setattr(
             editor_launch,
@@ -58,7 +58,7 @@ if "pytest" in sys.modules:
 
     def test_open_code_workspace_falls_back_to_terminal_on_macos(monkeypatch):
         calls = []
-        monkeypatch.setattr(editor_launch, "_IS_MAC", True)
+        monkeypatch.setattr(editor_launch, "_is_mac", lambda: True)
         monkeypatch.setattr(
             editor_launch,
             "expand_path",
@@ -83,7 +83,7 @@ if "pytest" in sys.modules:
 
     def test_open_code_workspace_notifies_when_direct_launch_is_unavailable(monkeypatch):
         notifications = []
-        monkeypatch.setattr(editor_launch, "_IS_MAC", False)
+        monkeypatch.setattr(editor_launch, "_is_mac", lambda: False)
         monkeypatch.setattr(
             editor_launch,
             "expand_path",
@@ -126,7 +126,7 @@ if "pytest" in sys.modules:
     def test_open_cursor_workspace_uses_windows_direct_candidate(monkeypatch):
         calls = []
         fake_binary = Path(r"C:\Cursor\Cursor.exe")
-        monkeypatch.setattr(editor_launch, "_IS_MAC", False)
+        monkeypatch.setattr(editor_launch, "_is_mac", lambda: False)
         monkeypatch.setattr(
             editor_launch,
             "expand_path",

@@ -17,6 +17,11 @@ def _set_output_shokz() -> None:
     actions.user.audio_set_system_output_shokz()
 
 
+def _save_shortcut(platform: str | None = None) -> str:
+    """Return the editor save shortcut for the current platform."""
+    return "cmd-s" if (platform or app.platform) == "mac" else "ctrl-s"
+
+
 def _daily_dir() -> Path:
     if _DAILY_DIR_OVERRIDE is not None:
         return _DAILY_DIR_OVERRIDE
@@ -90,7 +95,7 @@ class Actions:
             return
 
         # Save the currently focused editor window before reading the file.
-        actions.key("cmd-s")
+        actions.key(_save_shortcut())
         actions.sleep("500ms")
         is_ok, status = _daily_note_status(note_path)
 
