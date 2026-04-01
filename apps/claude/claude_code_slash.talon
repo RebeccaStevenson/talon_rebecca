@@ -2,21 +2,11 @@ os: mac
 -
 # Claude Code slash-command and vim-mode helpers.
 
-# Slash Commands - Session Management
-claude help: insert("/help")
-claude exit command: insert("/exit")
-claude clear: insert("/clear")
-claude config: insert("/config")
-claude compact: insert("/compact")
-claude resume: insert("/resume")
-
-# Slash Commands - System
+# Claude-only slash commands.
 claude doctor: insert("/doctor")
-claude cost: insert("/cos")
+claude cost: insert("/cost")
 claude ide: insert("/ide")
-claude mcp: insert("/mcp")
 claude terminal setup: insert("/terminal-setup")
-claude permissions: insert("/permissions")
 
 # Vim Mode Commands
 claude vim: insert("/vim")

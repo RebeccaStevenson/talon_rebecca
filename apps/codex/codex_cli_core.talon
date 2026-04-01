@@ -4,11 +4,8 @@ app: cursor
 -
 
 # Codex keyboard, window, and in-session editing commands.
-codex cancel: key(ctrl-c)
 codex escape: key(escape)
 codex last: key(escape escape)
-codex quit: key(ctrl-c ctrl-c)
-codex interrupt: key(ctrl-c)
 
 codex close window:
     key(ctrl-c ctrl-c)

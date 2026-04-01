@@ -3,7 +3,6 @@ os: mac
 # Claude Code keyboard, session, and voice-helper commands.
 
 # Keyboard Shortcuts
-claude cancel: key(ctrl-c)
 claude exit: key(ctrl-d)
 claude clear screen: key(ctrl-l)
 claude escape edit: key(escape escape)

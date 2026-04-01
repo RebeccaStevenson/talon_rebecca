@@ -16,6 +16,27 @@ from user.talon_rebecca.core.platform_utils import (
 mod = Module()
 _last_windows_terminal_process: Optional[subprocess.Popen] = None
 
+_AGENT_LAUNCH_SUFFIXES = {
+    "default": {
+        "codex": None,
+        "claude": None,
+    },
+    # Preserve current local "allow" behavior even though the underlying
+    # harnesses expose different permission models.
+    "allow": {
+        "codex": "--full-auto",
+        "claude": "--allow-dangerously-skip-permissions",
+    },
+    "resume": {
+        "codex": "resume",
+        "claude": "--resume",
+    },
+    "yolo": {
+        "codex": "--dangerously-bypass-approvals-and-sandbox",
+        "claude": "--dangerously-skip-permissions",
+    },
+}
+
 
 def _is_mac() -> bool:
     return app.platform == "mac"
@@ -36,6 +57,26 @@ def _run_command_via_macos_terminal(command: str) -> bool:
         stderr=subprocess.DEVNULL,
     )
     return result.returncode == 0
+
+
+def _normalized_agent(agent: str) -> str:
+    normalized = agent.strip().lower()
+    if normalized not in ("codex", "claude"):
+        raise ValueError(f"Unsupported agent harness: {agent}")
+    return normalized
+
+
+def _normalized_launch_mode(mode: str) -> str:
+    normalized = mode.strip().lower()
+    if normalized not in _AGENT_LAUNCH_SUFFIXES:
+        raise ValueError(f"Unsupported agent launch mode: {mode}")
+    return normalized
+
+
+def _looks_like_codex_subcommand(command_suffix: Optional[str]) -> bool:
+    if not command_suffix:
+        return False
+    return not command_suffix.strip().startswith("-")
 
 
 @mod.action_class
@@ -124,6 +165,16 @@ class Actions:
 
     def launch_codex_cli(path: Optional[str] = None, command_suffix: Optional[str] = None) -> None:
         """Launch Codex CLI in a new terminal, optionally targeting the provided path."""
+        if path and _looks_like_codex_subcommand(command_suffix):
+            base_command = "codex"
+            if command_suffix:
+                base_command = f"{base_command} {command_suffix.strip()}"
+            shell_command = command_with_directory(base_command, path)
+            actions.user.run_command_in_new_terminal(
+                shell_command, close_after=False, post_command_delay="1s"
+            )
+            return
+
         command_parts = ["codex"]
 
         if path:
@@ -159,3 +210,19 @@ class Actions:
         actions.user.run_command_in_new_terminal(
             shell_command, close_after=False, post_command_delay="1s"
         )
+
+    def agent_cli_launch(
+        agent: str,
+        path: Optional[str] = None,
+        mode: str = "default",
+    ) -> None:
+        """Launch a supported agent CLI in a new terminal."""
+        normalized_agent = _normalized_agent(agent)
+        normalized_mode = _normalized_launch_mode(mode)
+        command_suffix = _AGENT_LAUNCH_SUFFIXES[normalized_mode][normalized_agent]
+
+        if normalized_agent == "codex":
+            actions.user.launch_codex_cli(path, command_suffix)
+            return
+
+        actions.user.launch_claude_cli(path, command_suffix)

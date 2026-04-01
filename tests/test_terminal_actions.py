@@ -197,3 +197,102 @@ if "pytest" in sys.modules:
                 "post_command_delay": "1s",
             }
         ]
+
+    def test_launch_codex_cli_changes_directory_before_resume_subcommand(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "run_command_in_new_terminal",
+            lambda command, press_enter=True, close_after=True, post_command_delay="300ms": calls.append(
+                {
+                    "command": command,
+                    "press_enter": press_enter,
+                    "close_after": close_after,
+                    "post_command_delay": post_command_delay,
+                }
+            ),
+        )
+        monkeypatch.setattr(
+            terminal_actions,
+            "command_with_directory",
+            lambda command, path: f"cd '/tmp/project folder'\n{command}",
+        )
+
+        actions.user.launch_codex_cli("~/project folder", "resume")
+
+        assert calls == [
+            {
+                "command": "cd '/tmp/project folder'\ncodex resume",
+                "press_enter": True,
+                "close_after": False,
+                "post_command_delay": "1s",
+            }
+        ]
+
+    def test_agent_cli_launch_routes_codex_yolo(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_codex_cli",
+            lambda path=None, command_suffix=None: calls.append((path, command_suffix)),
+        )
+
+        actions.user.agent_cli_launch("codex", "~/project folder", "yolo")
+
+        assert calls == [
+            ("~/project folder", "--dangerously-bypass-approvals-and-sandbox")
+        ]
+
+    def test_agent_cli_launch_routes_claude_default(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_claude_cli",
+            lambda path=None, command_suffix=None: calls.append((path, command_suffix)),
+        )
+
+        actions.user.agent_cli_launch("claude")
+
+        assert calls == [(None, None)]
+
+    def test_agent_cli_launch_routes_codex_resume(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_codex_cli",
+            lambda path=None, command_suffix=None: calls.append((path, command_suffix)),
+        )
+
+        actions.user.agent_cli_launch("codex", mode="resume")
+
+        assert calls == [(None, "resume")]
+
+    def test_agent_cli_launch_routes_codex_resume_with_path(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_codex_cli",
+            lambda path=None, command_suffix=None: calls.append((path, command_suffix)),
+        )
+
+        actions.user.agent_cli_launch("codex", "~/project folder", "resume")
+
+        assert calls == [("~/project folder", "resume")]
+
+    def test_agent_cli_launch_routes_claude_resume_with_path(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_claude_cli",
+            lambda path=None, command_suffix=None: calls.append((path, command_suffix)),
+        )
+
+        actions.user.agent_cli_launch("claude", "~/project folder", "resume")
+
+        assert calls == [("~/project folder", "--resume")]
