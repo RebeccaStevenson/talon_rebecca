@@ -14,8 +14,11 @@ from user.talon_rebecca.core.platform_utils import (
 )
 
 mod = Module()
-_IS_MAC = app.platform == "mac"
 _last_windows_terminal_process: Optional[subprocess.Popen] = None
+
+
+def _is_mac() -> bool:
+    return app.platform == "mac"
 
 
 def _run_command_via_macos_terminal(command: str) -> bool:
@@ -40,7 +43,7 @@ class Actions:
     def open_new_terminal_window() -> None:
         """Open and focus a new terminal window on the current platform."""
         global _last_windows_terminal_process
-        if _IS_MAC:
+        if _is_mac():
             try:
                 actions.user.switcher_focus("terminal")
                 actions.sleep("200ms")
@@ -71,7 +74,7 @@ class Actions:
     def close_terminal_window() -> None:
         """Close the currently focused terminal window."""
         global _last_windows_terminal_process
-        if _IS_MAC:
+        if _is_mac():
             try:
                 actions.user.switcher_focus("terminal")
                 actions.sleep("200ms")
@@ -98,7 +101,7 @@ class Actions:
         post_command_delay: str = "300ms",
     ) -> None:
         """Open a new terminal window, run the command, and optionally close the window."""
-        if _IS_MAC and press_enter:
+        if _is_mac() and press_enter:
             terminal_command = command if not close_after else f"{command}\nexit"
             if _run_command_via_macos_terminal(terminal_command):
                 actions.sleep(post_command_delay)
@@ -111,7 +114,7 @@ class Actions:
             actions.key("enter")
         actions.sleep(post_command_delay)
         if close_after:
-            if _IS_MAC:
+            if _is_mac():
                 actions.user.switcher_focus("terminal")
                 actions.sleep("200ms")
             actions.insert("exit")
@@ -125,7 +128,7 @@ class Actions:
 
         if path:
             expanded_path = expand_path(path)
-            if _IS_MAC:
+            if _is_mac():
                 path_arg = shlex.quote(expanded_path)
             else:
                 safe_path = expanded_path.replace('"', '`"')

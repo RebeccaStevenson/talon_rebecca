@@ -133,6 +133,39 @@ if "pytest" in sys.modules:
             }
         ]
 
+    def test_launch_codex_cli_uses_windows_quoting_when_platform_changes(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "run_command_in_new_terminal",
+            lambda command, press_enter=True, close_after=True, post_command_delay="300ms": calls.append(
+                {
+                    "command": command,
+                    "press_enter": press_enter,
+                    "close_after": close_after,
+                    "post_command_delay": post_command_delay,
+                }
+            ),
+        )
+        monkeypatch.setattr(terminal_actions.app, "platform", "windows")
+        monkeypatch.setattr(
+            terminal_actions,
+            "expand_path",
+            lambda path: r'C:\Users\rebec\project "folder"',
+        )
+
+        actions.user.launch_codex_cli(r"~\project folder", "--search")
+
+        assert calls == [
+            {
+                "command": 'codex --cd "C:\\Users\\rebec\\project `"folder`"" --search',
+                "press_enter": True,
+                "close_after": False,
+                "post_command_delay": "1s",
+            }
+        ]
+
     def test_launch_claude_cli_changes_directory_before_launch(monkeypatch):
         calls = []
 
