@@ -39,7 +39,7 @@ Default Chrome extension shortcuts:
 
 The capture service resolves source files from localhost URLs using:
 
-- `~/.talon/user/talon_rebecca_private/settings/preview_sync_roots.json` (preferred)
+- `~/.talon/user/talon_rebecca_personal/settings/preview_sync_roots.json` (preferred)
 - `user/talon_rebecca/settings/preview_sync_roots.json` (fallback)
 
 Example:

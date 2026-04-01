@@ -3,5 +3,5 @@ list: user.edit_text_file
 
 additional words: ../talon_rebecca/settings/vocabulary.talon-list
 vocabulary: ../talon_rebecca/settings/vocabulary.talon-list
-search engines: ../talon_rebecca_private/settings/search_engines.talon-list
-websites: ../talon_rebecca_private/settings/websites.talon-list
+search engines: ../talon_rebecca_personal/settings/search_engines.talon-list
+websites: ../talon_rebecca_personal/settings/websites.talon-list

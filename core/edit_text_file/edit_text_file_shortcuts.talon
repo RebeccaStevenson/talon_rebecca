@@ -8,7 +8,7 @@ replace edit:
     user.edit_text_file("../talon_rebecca/settings/words_to_replace.csv")
 
 websites edit:
-    user.edit_text_file("../talon_rebecca_private/settings/websites.talon-list")
+    user.edit_text_file("../talon_rebecca_personal/settings/websites.talon-list")
 
 search engines edit:
-    user.edit_text_file("../talon_rebecca_private/settings/search_engines.talon-list")
+    user.edit_text_file("../talon_rebecca_personal/settings/search_engines.talon-list")

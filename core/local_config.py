@@ -1,4 +1,4 @@
-"""Shared helpers for loading local/private JSON settings."""
+"""Shared helpers for loading local/personal JSON settings."""
 
 from __future__ import annotations
 
@@ -7,13 +7,13 @@ from pathlib import Path
 from typing import Iterable
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-PRIVATE_SETTINGS_DIR = REPO_ROOT.parent / "talon_rebecca_private" / "settings"
+PERSONAL_SETTINGS_DIR = REPO_ROOT.parent / "talon_rebecca_personal" / "settings"
 PUBLIC_SETTINGS_DIR = REPO_ROOT / "settings"
 
 
 def settings_path(filename: str, *, private: bool) -> Path:
-    """Return the canonical private or public settings path for *filename*."""
-    base_dir = PRIVATE_SETTINGS_DIR if private else PUBLIC_SETTINGS_DIR
+    """Return the canonical personal or public settings path for *filename*."""
+    base_dir = PERSONAL_SETTINGS_DIR if private else PUBLIC_SETTINGS_DIR
     return base_dir / filename
 
 

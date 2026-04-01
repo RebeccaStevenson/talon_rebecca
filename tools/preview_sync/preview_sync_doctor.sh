@@ -5,10 +5,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 USER_DIR="$(cd "$REPO_DIR/.." && pwd)"
 SERVER_SCRIPT="$SCRIPT_DIR/capture_server.py"
-PRIVATE_ROOTS_CONFIG="$USER_DIR/talon_rebecca_private/settings/preview_sync_roots.json"
+PERSONAL_ROOTS_CONFIG="$USER_DIR/talon_rebecca_personal/settings/preview_sync_roots.json"
 PUBLIC_ROOTS_CONFIG="$REPO_DIR/settings/preview_sync_roots.json"
-if [[ -f "$PRIVATE_ROOTS_CONFIG" ]]; then
-  ROOTS_CONFIG="$PRIVATE_ROOTS_CONFIG"
+if [[ -f "$PERSONAL_ROOTS_CONFIG" ]]; then
+  ROOTS_CONFIG="$PERSONAL_ROOTS_CONFIG"
 else
   ROOTS_CONFIG="$PUBLIC_ROOTS_CONFIG"
 fi

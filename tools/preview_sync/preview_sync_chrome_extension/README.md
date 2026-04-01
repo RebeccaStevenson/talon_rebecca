@@ -33,7 +33,7 @@ You can customize in `chrome://extensions/shortcuts`.
 Captures are posted to `http://127.0.0.1:27832/capture`.
 The server resolves source paths from localhost URLs using configured roots in:
 
-- `~/.talon/user/talon_rebecca_private/settings/preview_sync_roots.json` (preferred)
+- `~/.talon/user/talon_rebecca_personal/settings/preview_sync_roots.json` (preferred)
 - `talon_rebecca/settings/preview_sync_roots.json` (fallback)
 
 Example config:
