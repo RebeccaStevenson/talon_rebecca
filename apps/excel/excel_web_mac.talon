@@ -3,8 +3,12 @@ app: chrome
 browser.host: excel.cloud.microsoft
 # title: /(Excel for the Web|Microsoft 365| Excel)/
 -
-# Remaining shortcuts are still mac-only until they are validated against
-# Excel for the web's browser-specific shortcut behavior.
+# These chords are Rebecca-specific macOS/browser overrides.
+# They are intentionally kept separate from the shared Excel-for-the-web file
+# because current Microsoft docs do not clearly document them as canonical
+# Excel for the web shortcuts on Mac.
+# Treat this file as provisional until each command is validated in-app against
+# the current override-browser-shortcuts behavior.
 
 zoom in: key(cmd-alt-=)
 zoom out: key(cmd-alt--)

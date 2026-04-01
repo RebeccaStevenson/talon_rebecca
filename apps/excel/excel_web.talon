@@ -11,8 +11,13 @@ paste special: user.excel_web_mod("alt-v")
 
 formula: key(shift-f3)
 edit: key(f2)
-complete: key(alt-down)
-ditto: user.excel_web_mod("'")
+# Alt+Down opens the active list/menu in Excel for the web. In formula-edit
+# contexts this exposes Formula AutoComplete; it is not the same as committing
+# the current cell entry.
+(formula list | auto complete list): key(alt-down)
+
+# Ctrl+' copies the formula from the cell above; keep the voice phrase explicit.
+(formula above | copy formula above): user.excel_web_mod("'")
 
 bold: user.excel_web_mod("b")
 italic: user.excel_web_mod("i")
