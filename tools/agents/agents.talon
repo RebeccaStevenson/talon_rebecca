@@ -16,29 +16,8 @@
 {user.agent_harness} {user.agent_launch_flag} <user.system_path>:
     user.agent_cli_launch(agent_harness, system_path, agent_launch_flag)
 
-{user.agent_harness} launch:
-    user.agent_cli_launch(agent_harness)
-
-{user.agent_harness} launch <user.system_path>:
-    user.agent_cli_launch(agent_harness, system_path)
-
-{user.agent_harness} launch {user.agent_launch_flag}:
-    user.agent_cli_launch(agent_harness, "", agent_launch_flag)
-
-{user.agent_harness} launch {user.agent_launch_flag} <user.system_path>:
-    user.agent_cli_launch(agent_harness, system_path, agent_launch_flag)
-
-start {user.agent_harness}:
-    user.agent_cli_launch(agent_harness)
-
-start {user.agent_harness} <user.system_path>:
-    user.agent_cli_launch(agent_harness, system_path)
-
-start {user.agent_harness} {user.agent_launch_flag}:
-    user.agent_cli_launch(agent_harness, "", agent_launch_flag)
-
-start {user.agent_harness} {user.agent_launch_flag} <user.system_path>:
-    user.agent_cli_launch(agent_harness, system_path, agent_launch_flag)
+{user.agent_harness} {user.agent_launch_flag} <user.system_path> <user.text>:
+    user.agent_cli_launch_with_prompt(agent_harness, system_path, text, agent_launch_flag)
 
 {user.agent_harness} cancel:
     user.agent_cli_key(agent_harness, "cancel")

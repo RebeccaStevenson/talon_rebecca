@@ -49,6 +49,8 @@ This is a custom SuperWhisper mode configuration with prompts tailored for:
 - Removing stop phrases like "whisper stop" from output
 - Converting spoken variable/function names to `snake_case`
 
+The mode prompt should explicitly tell the LLM to remove spoken control phrases such as `whisper stop` from the final transcript instead of transcribing them literally.
+
 ## Installation
 
 ### Step 1: Install the SuperWhisper Mode

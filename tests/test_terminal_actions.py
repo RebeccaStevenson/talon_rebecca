@@ -378,6 +378,46 @@ if "pytest" in sys.modules:
 
         assert calls == [("~/project folder", None, "refactor this code base")]
 
+    def test_agent_cli_launch_with_prompt_routes_codex_yolo(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_codex_cli",
+            lambda path=None, command_suffix=None, prompt=None: calls.append(
+                (path, command_suffix, prompt)
+            ),
+        )
+
+        actions.user.agent_cli_launch_with_prompt(
+            "codex", "~/project folder", "refactor this code base", "yolo"
+        )
+
+        assert calls == [
+            (
+                "~/project folder",
+                "--dangerously-bypass-approvals-and-sandbox",
+                "refactor this code base",
+            )
+        ]
+
+    def test_agent_cli_launch_with_prompt_routes_claude_resume(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_claude_cli",
+            lambda path=None, command_suffix=None, prompt=None: calls.append(
+                (path, command_suffix, prompt)
+            ),
+        )
+
+        actions.user.agent_cli_launch_with_prompt(
+            "claude", "~/project folder", "refactor this code base", "resume"
+        )
+
+        assert calls == [("~/project folder", "--resume", "refactor this code base")]
+
     def test_agent_cli_launch_routes_claude_resume_with_path(monkeypatch):
         calls = []
 
