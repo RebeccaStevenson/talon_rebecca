@@ -1,56 +1,65 @@
 # talon_rebecca
 
-Personal Talon command set and compatibility layer on top of upstream Talon/community packages.
+Custom Talon command set on top upstream talon community default commands
 
 See `CONTRIBUTING.md` for placement rules, testing expectations, and the current settings layout.
 
-## Overview
+## Custom commands I find particularly useful
 
 - SuperWhisper handoff commands that cleanly toggle speech control between Talon and SuperWhisper
 - Voice shortcuts for Claude, Codex, and ChatGPT
 - Overrides related to repetition and key naming
 
-## SuperWhisper Handoff
+## [SuperWhisper](https://superwhisper.com/) Handoff
 
-This repo includes a SuperWhisper integration for switching between Talon command mode and SuperWhisper dictation.
+This repo includes a [SuperWhisper](https://superwhisper.com/) integration for switching between Talon command mode and SuperWhisper dictation.
+Reference: [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md).
 
-| Command | What it does | Scope | App / reference |
-|---|---|---|---|
-| `whisper start` | Disables Talon speech and starts SuperWhisper recording | Global | [SuperWhisper](https://superwhisper.com/), [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md) |
-| `whisper stop` | Stops SuperWhisper and re-enables Talon speech | Global | [SuperWhisper](https://superwhisper.com/), [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md) |
-| `whisper cancel` / `super cancel` | Cancels recording and returns control to Talon | Global | [SuperWhisper](https://superwhisper.com/), [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md) |
-| `whisper mode <mode>` | Switches SuperWhisper mode without starting recording | Global | [SuperWhisper](https://superwhisper.com/), [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md) |
-| `whisper start <mode>` | Switches mode and starts recording | Global | [SuperWhisper](https://superwhisper.com/), [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md) |
+| Command | What it does | Scope |
+|---|---|---|
+| `whisper start` | Disables Talon speech and starts SuperWhisper recording | Global |
+| `whisper stop` | Stops SuperWhisper and re-enables Talon speech | Global |
+| `whisper cancel` / `super cancel` | Cancels recording and returns control to Talon | Global |
+| `whisper mode <mode>` | Switches SuperWhisper mode without starting recording | Global |
+| `whisper start <mode>` | Switches mode and starts recording | Global |
 
 If you want the full setup, mode configuration, and caveats, see [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhisper/superwhisper_talon_integration.md).
 
 ## AI Tool Commands
 
-### Claude
+### [Claude](https://www.anthropic.com/claude), [Codex](https://openai.com/codex/), and [ChatGPT](https://chatgpt.com/)
 
-| Tool | Command | What it does | Scope | App / reference |
-|---|---|---|---|---|
-| Claude | `claude start` | Launches Claude Code | Global | [Claude](https://www.anthropic.com/claude), `apps/claude/` |
-| Claude | `claude start <path>` | Launches Claude Code in a target directory | Global | [Claude](https://www.anthropic.com/claude), `apps/claude/` |
-| Claude | `claude yolo` | Launches Claude Code with permissive flags | Global | [Claude](https://www.anthropic.com/claude), `apps/claude/` |
-| Claude | `claude allow` | Launches Claude Code with allow-based permissions | Global | [Claude](https://www.anthropic.com/claude), `apps/claude/` |
-| Claude | `claude new conversation` | Creates a new conversation in the Claude desktop app | Claude desktop | [Claude](https://www.anthropic.com/claude), `apps/claude/` |
-| Claude | `claude open settings` | Opens Claude desktop settings | Claude desktop | [Claude](https://www.anthropic.com/claude), `apps/claude/` |
-| Codex | `start codex` | Launches Codex | Global | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex search` | Starts the Codex search flow | Global | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex allow` | Launches Codex with `--full-auto` | Global | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex command menu` | Opens the Codex command palette | Codex desktop | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex reload skills` | Runs the “Force reload skills” command | Codex desktop | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex thread new` | Creates a new thread | Codex desktop | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex open folder` | Opens a folder in Codex | Codex desktop | [Codex](https://openai.com/codex/), `apps/codex/` |
-| Codex | `codex toggle terminal` | Toggles the terminal panel | Codex desktop | [Codex](https://openai.com/codex/), `apps/codex/` |
-| ChatGPT | `chat new` | Starts a new chat | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
-| ChatGPT | `chat focus` | Focuses the chat input | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
-| ChatGPT | `chat copy` | Copies the current response | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
-| ChatGPT | `chat copy code` | Copies the current code block | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
-| ChatGPT | `chat custom` | Opens the custom instructions shortcut | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
-| ChatGPT | `chat toggle` | Toggles the sidebar or chat panel shortcut | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
-| ChatGPT | `chat trash` | Deletes the current chat | ChatGPT in browser | [ChatGPT](https://chatgpt.com/), `apps/chatgpt/` |
+Related Talon files: [`tools/agents/`](tools/agents/), [`apps/claude/`](apps/claude/), [`apps/codex/`](apps/codex/), and [`apps/chatgpt/`](apps/chatgpt/).
+
+Codex and Claude now share a consolidated agent command layer while preserving explicit harness prefixes. The spoken prefix selects the harness, and the remainder of the phrase routes through shared launch, key, and slash-command mappings.
+
+| Tool | Command | What it does | Scope |
+|---|---|---|---|
+| Codex / Claude | `codex` / `claude` | Launches the selected harness in the current directory | Global |
+| Codex / Claude | `codex <path>` / `claude <path>` | Launches the selected harness in a target directory | Global |
+| Codex / Claude | `codex resume` / `claude resume` | Launches the selected harness in resume mode | Global |
+| Codex / Claude | `codex allow` / `claude allow` | Launches the selected harness in the configured allow mode | Global |
+| Codex / Claude | `codex yolo` / `claude yolo` | Launches the selected harness in its most permissive mode | Global |
+| Codex / Claude | `codex compact` / `claude compact` | Inserts the shared `/compact` slash command | Terminal / CLI |
+| Codex / Claude | `codex permissions` / `claude permissions` | Inserts the shared permissions slash command | Terminal / CLI |
+| Codex / Claude | `codex slash resume` / `claude slash resume` | Inserts the slash-level `/resume` command inside an active session | Terminal / CLI |
+| Codex | `codex search` | Starts the Codex search flow | Global |
+| Codex | `codex command menu` | Opens the Codex command palette | Codex desktop |
+| Codex | `codex reload skills` | Runs the “Force reload skills” command | Codex desktop |
+| Codex | `codex thread new` | Creates a new thread | Codex desktop |
+| Codex | `codex open folder` | Opens a folder in Codex | Codex desktop |
+| Codex | `codex toggle terminal` | Toggles the terminal panel | Codex desktop |
+| Claude | `claude doctor` | Inserts the Claude-only `/doctor` slash command | Terminal / CLI |
+| Claude | `claude cost` | Inserts the Claude-only `/cost` slash command | Terminal / CLI |
+| Claude | `claude new conversation` | Creates a new conversation in the Claude desktop app | Claude desktop |
+| Claude | `claude open settings` | Opens Claude desktop settings | Claude desktop |
+| ChatGPT | `chat new` | Starts a new chat | ChatGPT in browser |
+| ChatGPT | `chat focus` | Focuses the chat input | ChatGPT in browser |
+| ChatGPT | `chat copy` | Copies the current response | ChatGPT in browser |
+| ChatGPT | `chat copy code` | Copies the current code block | ChatGPT in browser |
+| ChatGPT | `chat custom` | Opens the custom instructions shortcut | ChatGPT in browser |
+| ChatGPT | `chat toggle` | Toggles the sidebar or chat panel shortcut | ChatGPT in browser |
+| ChatGPT | `chat trash` | Deletes the current chat | ChatGPT in browser |
 
 ## Additional Commands
 

@@ -230,6 +230,66 @@ if "pytest" in sys.modules:
             }
         ]
 
+    def test_launch_codex_cli_appends_prompt_in_target_directory(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "run_command_in_new_terminal",
+            lambda command, press_enter=True, close_after=True, post_command_delay="300ms": calls.append(
+                {
+                    "command": command,
+                    "press_enter": press_enter,
+                    "close_after": close_after,
+                    "post_command_delay": post_command_delay,
+                }
+            ),
+        )
+        monkeypatch.setattr(terminal_actions, "expand_path", lambda path: "/tmp/project folder")
+
+        actions.user.launch_codex_cli("~/project folder", prompt="refactor this code base")
+
+        assert calls == [
+            {
+                "command": "codex --cd '/tmp/project folder' 'refactor this code base'",
+                "press_enter": True,
+                "close_after": False,
+                "post_command_delay": "1s",
+            }
+        ]
+
+    def test_launch_claude_cli_appends_prompt_in_target_directory(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "run_command_in_new_terminal",
+            lambda command, press_enter=True, close_after=True, post_command_delay="300ms": calls.append(
+                {
+                    "command": command,
+                    "press_enter": press_enter,
+                    "close_after": close_after,
+                    "post_command_delay": post_command_delay,
+                }
+            ),
+        )
+        monkeypatch.setattr(
+            terminal_actions,
+            "command_with_directory",
+            lambda command, path: f"cd '/tmp/project folder'\n{command}",
+        )
+
+        actions.user.launch_claude_cli("~/project folder", prompt="refactor this code base")
+
+        assert calls == [
+            {
+                "command": "cd '/tmp/project folder'\nclaude 'refactor this code base'",
+                "press_enter": True,
+                "close_after": False,
+                "post_command_delay": "1s",
+            }
+        ]
+
     def test_agent_cli_launch_routes_codex_yolo(monkeypatch):
         calls = []
 
@@ -283,6 +343,40 @@ if "pytest" in sys.modules:
         actions.user.agent_cli_launch("codex", "~/project folder", "resume")
 
         assert calls == [("~/project folder", "resume")]
+
+    def test_agent_cli_launch_with_prompt_routes_codex(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_codex_cli",
+            lambda path=None, command_suffix=None, prompt=None: calls.append(
+                (path, command_suffix, prompt)
+            ),
+        )
+
+        actions.user.agent_cli_launch_with_prompt(
+            "codex", "~/project folder", "refactor this code base"
+        )
+
+        assert calls == [("~/project folder", None, "refactor this code base")]
+
+    def test_agent_cli_launch_with_prompt_routes_claude(monkeypatch):
+        calls = []
+
+        actions.register_test_action(
+            "user",
+            "launch_claude_cli",
+            lambda path=None, command_suffix=None, prompt=None: calls.append(
+                (path, command_suffix, prompt)
+            ),
+        )
+
+        actions.user.agent_cli_launch_with_prompt(
+            "claude", "~/project folder", "refactor this code base"
+        )
+
+        assert calls == [("~/project folder", None, "refactor this code base")]
 
     def test_agent_cli_launch_routes_claude_resume_with_path(monkeypatch):
         calls = []

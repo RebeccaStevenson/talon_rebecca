@@ -7,6 +7,9 @@
 {user.agent_harness} <user.system_path>:
     user.agent_cli_launch(agent_harness, system_path)
 
+{user.agent_harness} <user.system_path> <user.text>:
+    user.agent_cli_launch_with_prompt(agent_harness, system_path, text)
+
 {user.agent_harness} {user.agent_launch_flag}:
     user.agent_cli_launch(agent_harness, "", agent_launch_flag)
 

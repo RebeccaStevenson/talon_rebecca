@@ -10,6 +10,7 @@ from talon import Module, actions, app
 from user.talon_rebecca.core.platform_utils import (
     command_with_directory,
     expand_path,
+    quote_cli_arg,
     quote_applescript,
 )
 
@@ -77,6 +78,18 @@ def _looks_like_codex_subcommand(command_suffix: Optional[str]) -> bool:
     if not command_suffix:
         return False
     return not command_suffix.strip().startswith("-")
+
+
+def _append_prompt(command: str, prompt: Optional[str]) -> str:
+    if not prompt:
+        return command
+
+    normalized_prompt = prompt.strip()
+    if not normalized_prompt:
+        return command
+
+    platform_name = "mac" if _is_mac() else "windows"
+    return f"{command} {quote_cli_arg(normalized_prompt, platform=platform_name)}"
 
 
 @mod.action_class
@@ -163,12 +176,17 @@ class Actions:
             actions.sleep("400ms")
             actions.user.close_terminal_window()
 
-    def launch_codex_cli(path: Optional[str] = None, command_suffix: Optional[str] = None) -> None:
+    def launch_codex_cli(
+        path: Optional[str] = None,
+        command_suffix: Optional[str] = None,
+        prompt: Optional[str] = None,
+    ) -> None:
         """Launch Codex CLI in a new terminal, optionally targeting the provided path."""
         if path and _looks_like_codex_subcommand(command_suffix):
             base_command = "codex"
             if command_suffix:
                 base_command = f"{base_command} {command_suffix.strip()}"
+            base_command = _append_prompt(base_command, prompt)
             shell_command = command_with_directory(base_command, path)
             actions.user.run_command_in_new_terminal(
                 shell_command, close_after=False, post_command_delay="1s"
@@ -189,7 +207,7 @@ class Actions:
         if command_suffix:
             command_parts.append(command_suffix.strip())
 
-        shell_command = " ".join(command_parts)
+        shell_command = _append_prompt(" ".join(command_parts), prompt)
         actions.user.run_command_in_new_terminal(
             shell_command, close_after=False, post_command_delay="1s"
         )
@@ -201,11 +219,16 @@ class Actions:
         else:
             actions.insert("codex --search")
 
-    def launch_claude_cli(path: Optional[str] = None, command_suffix: Optional[str] = None) -> None:
+    def launch_claude_cli(
+        path: Optional[str] = None,
+        command_suffix: Optional[str] = None,
+        prompt: Optional[str] = None,
+    ) -> None:
         """Launch Claude CLI in a new terminal, optionally within the provided path."""
         base_command = "claude"
         if command_suffix:
             base_command = f"{base_command} {command_suffix.strip()}"
+        base_command = _append_prompt(base_command, prompt)
         shell_command = command_with_directory(base_command, path)
         actions.user.run_command_in_new_terminal(
             shell_command, close_after=False, post_command_delay="1s"
@@ -226,3 +249,20 @@ class Actions:
             return
 
         actions.user.launch_claude_cli(path, command_suffix)
+
+    def agent_cli_launch_with_prompt(
+        agent: str,
+        path: str,
+        prompt: str,
+        mode: str = "default",
+    ) -> None:
+        """Launch a supported agent CLI in a path and pass a startup prompt."""
+        normalized_agent = _normalized_agent(agent)
+        normalized_mode = _normalized_launch_mode(mode)
+        command_suffix = _AGENT_LAUNCH_SUFFIXES[normalized_mode][normalized_agent]
+
+        if normalized_agent == "codex":
+            actions.user.launch_codex_cli(path, command_suffix, prompt)
+            return
+
+        actions.user.launch_claude_cli(path, command_suffix, prompt)
