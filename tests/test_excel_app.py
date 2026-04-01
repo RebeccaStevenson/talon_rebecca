@@ -16,6 +16,15 @@ if "pytest" in sys.modules:
             == "ctrl-shift-="
         )
 
+    def test_excel_web_shortcut_uses_ctrl_on_mac():
+        assert excel_app._excel_web_shortcut("shift-=") == "ctrl-shift-="
+
+    def test_dialog_select_all_shortcut_uses_cmd_on_mac():
+        assert excel_app._dialog_select_all_shortcut(platform="mac") == "cmd-a"
+
+    def test_dialog_select_all_shortcut_uses_ctrl_on_windows():
+        assert excel_app._dialog_select_all_shortcut(platform="windows") == "ctrl-a"
+
     def test_excel_desktop_open_goto_tabs_on_mac(talon_platform):
         calls = []
         actions.register_test_action("", "key", lambda combo: calls.append(("key", combo)))
@@ -84,6 +93,50 @@ if "pytest" in sys.modules:
         assert calls == [
             ("key", "ctrl-g"),
             ("sleep", "25ms"),
+            ("insert", "B12"),
+            ("key", "enter"),
+        ]
+
+    def test_excel_web_goto_cell_reference_uses_cmd_a_on_mac(talon_platform):
+        calls = []
+        actions.register_test_action("", "key", lambda combo: calls.append(("key", combo)))
+        actions.register_test_action(
+            "", "sleep", lambda duration: calls.append(("sleep", duration))
+        )
+        actions.register_test_action(
+            "", "insert", lambda text: calls.append(("insert", text))
+        )
+
+        talon_platform("mac")
+        actions.user.excel_web_goto_cell_reference("B12")
+
+        assert calls == [
+            ("key", "ctrl-g"),
+            ("sleep", "25ms"),
+            ("key", "cmd-a"),
+            ("key", "backspace"),
+            ("insert", "B12"),
+            ("key", "enter"),
+        ]
+
+    def test_excel_web_goto_cell_reference_uses_ctrl_a_on_windows(talon_platform):
+        calls = []
+        actions.register_test_action("", "key", lambda combo: calls.append(("key", combo)))
+        actions.register_test_action(
+            "", "sleep", lambda duration: calls.append(("sleep", duration))
+        )
+        actions.register_test_action(
+            "", "insert", lambda text: calls.append(("insert", text))
+        )
+
+        talon_platform("windows")
+        actions.user.excel_web_goto_cell_reference("B12")
+
+        assert calls == [
+            ("key", "ctrl-g"),
+            ("sleep", "25ms"),
+            ("key", "ctrl-a"),
+            ("key", "backspace"),
             ("insert", "B12"),
             ("key", "enter"),
         ]
