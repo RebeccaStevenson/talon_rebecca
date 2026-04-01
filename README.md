@@ -20,8 +20,8 @@ Reference: [`apps/superwhisper/superwhisper_talon_integration.md`](apps/superwhi
 | `whisper start` | Disables Talon speech and starts SuperWhisper recording | Global |
 | `whisper stop` | Stops SuperWhisper and re-enables Talon speech | Global |
 | `whisper cancel` / `super cancel` | Cancels recording and returns control to Talon | Global |
-| `whisper mode <mode>` | Switches SuperWhisper mode without starting recording | Global |
-| `whisper start <mode>` | Switches mode and starts recording | Global |
+| `whisper mode [mode]` | Switches SuperWhisper mode without starting recording | Global |
+| `whisper start [mode]` | Switches mode and starts recording | Global |
 
 Note: the `normal.json` SuperWhisper mode used with this setup should include an LLM prompt that strips spoken control phrases such as `whisper stop` from the dictated output instead of transcribing them literally.
 
@@ -33,13 +33,13 @@ If you want the full setup, mode configuration, and caveats, see [`apps/superwhi
 
 Related Talon files: [`tools/agents/`](tools/agents/), [`apps/claude/`](apps/claude/), and [`apps/codex/`](apps/codex/).
 
-Codex and Claude share a consolidated agent command layer with an explicit harness prefix. The cheatsheet below follows the compact spoken-form style used by community-generated references: one row per command shape, with placeholders rather than duplicated variants.
+Codex and Claude share a consolidated agent command layer with an explicit harness prefix. The cheatsheet below follows a source-derived reference style: one row per command shape, compact grouping for obvious alternatives, and semantic placeholders rather than duplicated variants.
 
 ##### Launch
 
 | Spoken form | Result | Scope |
 |---|---|---|
-| `⟨codex | claude⟩ [⟨allow | resume | yolo⟩] [⟨path⟩ [⟨prompt⟩]]` | Launches the selected CLI in the current directory or a target directory; if a prompt follows a path, it seeds the new session; the optional mode maps to the harness-specific flag or subcommand. | Global |
+| `(codex | claude) [(allow | resume | yolo)] [path] [prompt after path]` | Launches the selected CLI in the current directory or a target directory; if a prompt follows a path, it seeds the new session; the optional mode maps to the harness-specific flag or subcommand. | Global |
 
 ### More commands
 
@@ -47,11 +47,11 @@ Codex and Claude share a consolidated agent command layer with an explicit harne
 
 | Spoken form | Result | Scope |
 |---|---|---|
-| `⟨codex | claude⟩ cancel` | Sends the interrupt keybinding for the active CLI session. | Terminal / CLI |
-| `⟨codex | claude⟩ interrupt` | Sends the interrupt keybinding for the active CLI session. | Terminal / CLI |
-| `⟨codex | claude⟩ quit` | Sends the harness-specific quit keybinding. | Terminal / CLI |
-| `⟨codex | claude⟩ ⟨clear | compact | diff | help | init | mcp | model | permissions | plan⟩` | Inserts the shared slash command for the selected harness. | Terminal / CLI |
-| `⟨codex | claude⟩ slash ⟨clear | compact | diff | help | init | mcp | model | permissions | plan | resume⟩` | Inserts the explicit slash-command form, including `resume`. | Terminal / CLI |
+| `(codex | claude) cancel` | Sends the interrupt keybinding for the active CLI session. | Terminal / CLI |
+| `(codex | claude) interrupt` | Sends the interrupt keybinding for the active CLI session. | Terminal / CLI |
+| `(codex | claude) quit` | Sends the harness-specific quit keybinding. | Terminal / CLI |
+| `(codex | claude) (clear | compact | diff | help | init | mcp | model | permissions | plan)` | Inserts the shared slash command for the selected harness. | Terminal / CLI |
+| `(codex | claude) slash (clear | compact | diff | help | init | mcp | model | permissions | plan | resume)` | Inserts the explicit slash-command form, including `resume`. | Terminal / CLI |
 | `codex approvals` | Preserves the older Codex phrase and inserts `/permissions`. | Terminal / CLI |
 | `claude doctor` | Inserts the Claude-only `/doctor` slash command. | Terminal / CLI |
 | `claude cost` | Inserts the Claude-only `/cost` slash command. | Terminal / CLI |
@@ -88,4 +88,4 @@ This repo also includes several overrides to default behavior, for example:
 
 | Spoken form | Result |
 |---|---|
-| `⟨phrase⟩ ⟨small number⟩` | Repeats the phrase until the total count matches the spoken number. |
+| `[phrase] [small number]` | Repeats the phrase until the total count matches the spoken number. |
