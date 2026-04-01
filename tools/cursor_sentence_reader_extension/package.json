@@ -1,0 +1,38 @@
+{
+  "name": "cursor-sentence-reader",
+  "displayName": "Cursor Sentence Reader",
+  "description": "Read markdown sentence-by-sentence with synchronized selection and notes capture.",
+  "version": "0.0.4",
+  "publisher": "rebecca",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:rebeccaSentenceReader.start",
+    "onCommand:rebeccaSentenceReader.stop",
+    "onCommand:rebeccaSentenceReader.captureCurrentSentenceToNotes"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "rebeccaSentenceReader.start",
+        "title": "Sentence Reader: Start"
+      },
+      {
+        "command": "rebeccaSentenceReader.stop",
+        "title": "Sentence Reader: Stop"
+      },
+      {
+        "command": "rebeccaSentenceReader.captureCurrentSentenceToNotes",
+        "title": "Sentence Reader: Capture Current Sentence to Notes"
+      }
+    ]
+  },
+  "scripts": {
+    "package": "npx @vscode/vsce package"
+  }
+}

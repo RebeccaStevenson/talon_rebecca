@@ -1,0 +1,1 @@
+This `gui/` directory includes Talon scripts adapted from https://github.com/mirober/MR-talon/tree/60db56e80ad6ffc4c5d4d6cfaf279bebaa649886. See that repository for the original implementation details.

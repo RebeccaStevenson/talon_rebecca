@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Preview Sync Reader",
+  "description": "Sentence highlighting + speech + notes capture for localhost preview pages.",
+  "version": "0.1.0",
+  "permissions": ["tabs"],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "preview-sync-start-system": {
+      "suggested_key": {
+        "default": "Ctrl+7",
+        "mac": "Command+Shift+7"
+      },
+      "description": "Start sentence-synced reading with macOS system voice"
+    },
+    "preview-sync-start": {
+      "suggested_key": {
+        "default": "Ctrl+8",
+        "mac": "Command+Shift+8"
+      },
+      "description": "Start sentence-synced reading"
+    },
+    "preview-sync-stop": {
+      "suggested_key": {
+        "default": "Ctrl+9",
+        "mac": "Command+Shift+9"
+      },
+      "description": "Stop sentence-synced reading"
+    },
+    "preview-sync-capture": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Capture current sentence to notes"
+    }
+  }
+}

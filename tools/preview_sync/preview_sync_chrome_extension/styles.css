@@ -1,0 +1,7 @@
+.preview-sync-current-sentence {
+  background: #fff3a3;
+  outline: 2px solid #f2c94c;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}

@@ -1,0 +1,62 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+custom_prompts.talon
+
+# Personal settings (contain local paths and bookmarks)
+system_paths-*.talon-list
+settings/vocabulary.talon-list
+settings/websites.talon-list
+settings/search_engines.talon-list
+settings/words_to_replace.csv
+settings/websites.csv
+settings/search_engines.csv
+settings/additional_words.csv
+
+# Personal notes
+misc/notes/notes/
+.git-backup-*
+
+# Personal excel scripts
+excel_habit.py
+excel_custom.py
+
+# Personal SuperWhisper prompts
+superwhisperPrompts.md
+
+# Optional SuperWhisper shell scripts (user-specific)
+tools/superwhisper/scripts/
+
+# Personal Talon scripts
+telegram.talon
+felix.talon
+
+# Personal behavioral helpers
+bayesian_models.py
+break_timer.py
+recording.py
+
+# Personal environment scripts
+system/python_env_mac.talon
+system/python_env_win.talon
+
+# Build artifacts
+tools/cursor_sentence_reader_extension/*.vsix
+
+# Generated docs and cheatsheets
+docs/community_cheatsheet*
+docs/custom_cheatsheet*
+docs/community_cheatsheet_files/
+docs/custom_cheatsheet_files/
+docs/eval_review.html
+cheatsheet_skill/
+
+# Preview sync runtime files
+tools/preview_sync/.preview_sync_server.pid
+tools/preview_sync/debug/
+tools/preview_sync/preview_sync.log
+
+# Settings backups
+settings/*.bak.*

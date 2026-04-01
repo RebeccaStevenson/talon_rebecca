@@ -1,0 +1,6 @@
+list: user.superwhisper_mode_key
+-
+local: local
+normal: normal
+super: super
+
